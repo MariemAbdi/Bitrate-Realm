@@ -46,3 +46,11 @@ A Flutter Project For Live Streaming.
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/dd6526f6-1740-4930-b6eb-4c49ffcbeff0" width="300">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/b1bcb396-a6fb-4cef-a0bc-eb9c17d1e215" width="300">
 </p>
+
+<p float="left" align="center">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/b1bcb396-a6fb-4cef-a0bc-eb9c17d1e215" width="300">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/cfef6269-9cfe-4f1a-a427-d05d21bc6639" width="300">
+</p>
+
+
+
