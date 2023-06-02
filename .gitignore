@@ -52,3 +52,7 @@ android/key.properties
 GoogleService-Info.plist
 google-services.json
 **/ios/Runner/GoogleService-Info.plist
+
+# Firebase configuration files
+/lib/firebase_options.dart
+/web/firebase-config.js

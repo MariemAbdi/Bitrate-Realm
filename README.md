@@ -16,7 +16,7 @@ A Flutter Project For Live Streaming.
 </p>
 
 <p float="left" align="center">
-<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/0ded6f17-951b-460e-9402-7045ce5bf82e" width="300">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/abe2bf84-701e-4c27-a8b0-fd73af629cd4" width="300">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/7298f94e-7027-45a1-a084-449efc78f5c8" width="300">
 </p>
 
@@ -32,17 +32,21 @@ A Flutter Project For Live Streaming.
 
 <p float="left" align="center">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/fe4eae70-66f7-412e-90d7-f2079541429a" width="300">
-<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/77ffecbc-8851-4726-a879-e83c5fc3d3e3" width="300">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/b0f7dd79-538a-4b90-bcef-eaa1a73b0522" width="300">
 </p>
 
 <p float="left" align="center">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/1573dd04-1aeb-4f9e-ba5f-a8441dfe472b" width="300">
-<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/d385fcb4-103a-4f73-9a34-65ea8b159a3b" width="300">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/77ffecbc-8851-4726-a879-e83c5fc3d3e3" width="300">
 </p>
 
 
 <p float="left" align="center">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/85b7b7a8-a84e-43fd-9c64-e4f093e6b092" width="300">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/dd6526f6-1740-4930-b6eb-4c49ffcbeff0" width="300">
+</p>
+
+<p float="left" align="center">
 <img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/b1bcb396-a6fb-4cef-a0bc-eb9c17d1e215" width="300">
+<img src="https://github.com/MariemAbdi/Bitrate-Realm/assets/100727442/cfef6269-9cfe-4f1a-a427-d05d21bc6639" width="300">
 </p>
