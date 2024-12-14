@@ -28,7 +28,7 @@ dependencies:
   #SAVE DATA
   firebase_core: ^2.7.0
   firebase_core_web: ^2.2.1
-  firebase_auth: ^4.2.9
+  firebase_auth: any
   cloud_firestore: ^4.4.3
   firebase_storage: ^11.1.0
   flutter_secure_storage: ^8.0.0
@@ -45,10 +45,8 @@ dependencies:
   like_button: ^2.0.5 #ANIMATED LOVE REACT
   #OTHER
   provider: ^6.0.5 #STATE MANAGEMENT
-  google_sign_in: ^6.0.2 #LOGIN WITH A GOOGLE ACCOUNT
-  flutter_facebook_auth: ^5.0.8 #LOGIN WITH A FACEBOOK ACCOUNT
+  google_sign_in: any #LOGIN WITH A GOOGLE ACCOUNT
   easy_localization: ^3.0.1 #INTERNATIONALIZATION
-  connectivity_plus: ^3.0.3 #CHECK INTERNET CONNECTIVITY
   file_picker: ^5.2.6 #PICK FILES FROM DEVICE
   permission_handler: ^10.2.0 #HANDLES NEEDED PERMISSIONS
   textfield_tags: ^2.0.2 #TAG TEXT FIELD
@@ -59,22 +57,20 @@ dependencies:
   intl: ^0.18.0 #USED TO FORMAT THE DATES
   timeago: ^3.4.0 #USED TO FORMAT THE DATES
   #STILL TESTING THESE
-
+  flutter_animate: ^4.2.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: any
   flutter_launcher_icons: ^0.12.0
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/logo.png"
   background_color: "#ffffff"
-
-
 
   web:
     generate: true

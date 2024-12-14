@@ -2,37 +2,27 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:livestream/Screens/Authentication/forgot_password_screen.dart';
-import 'package:livestream/Screens/Authentication/login_screen.dart';
-import 'package:livestream/Screens/Authentication/registration_screen.dart';
-import 'package:livestream/Screens/HomePage/home_screen.dart';
-import 'package:livestream/Resources/firebase_auth_methods.dart';
-import 'package:livestream/Screens/Settings/contact_us.dart';
+import 'package:livestream/Services/firebase_auth_services.dart';
+import 'package:livestream/screens/login.dart';
+import 'package:livestream/screens/navigation.dart';
 import 'package:livestream/translations/codegen_loader.g.dart';
-import 'package:livestream/unknown_route_page.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
 
-import 'Screens/Going Live/go_live_screen.dart';
-import 'Screens/Settings/settings_screen.dart';
-import 'Services/Themes/theme_service.dart';
-import 'Services/Themes/my_themes.dart';
+import 'services/theme_services.dart';
+import 'config/app_style.dart';
 import 'firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import 'on_boarding_screen.dart';
 
 Future<void> main() async {
   //USED FOR THE BINDING TO BE INITIALIZED BEFORE CALLING runApp.
   WidgetsFlutterBinding.ensureInitialized();
 
   //SET THE ORIENTATION TO BE PORTRAIT ONLY
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight,]);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   //MAKE THE APP FULL SCREEN => HIDES THE STATUS AND NAVIGATION BAR OF THE PHONE
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky, overlays: []);
@@ -44,7 +34,7 @@ Future<void> main() async {
   await GetStorage.init();
 
   //INITIALIZE FIREBASE
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   //INITIALIZING THE INTERNATIONALIZATION PACKAGE
   await EasyLocalization.ensureInitialized();
@@ -66,46 +56,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<FirebaseAuthMethods>(
-          create: (_)=>FirebaseAuthMethods(FirebaseAuth.instance),
+        ///This ensures that you only have one instance of FirebaseAuthServices for the lifetime of your app,
+        ///which can be accessed from any screen using context.read<FirebaseAuthServices>() or context.watch<FirebaseAuthServices>().
+        Provider<FirebaseAuthServices>(
+          create: (_)=> FirebaseAuthServices(FirebaseAuth.instance),
         ),
+        ///It automatically rebuilds parts of your UI whenever the authState changes, allowing you to display the appropriate screen.
+        /// initialData: null is used to provide a fallback value (null) before the stream emits its first value.
         StreamProvider(
-            create: (context)=>context.read<FirebaseAuthMethods>().authState,
-            initialData: null)
+            create: (context)=> context.read<FirebaseAuthServices>().authState,
+            initialData: null
+        )
       ],
       child: GetMaterialApp(
         //INTERNATIONALIZATION SETTINGS
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        //REMOVING THE DEBUG BANNER
         debugShowCheckedModeBanner: false,
-        //THEMES FILES
-        theme: MyThemes.lightTheme,
-        darkTheme: MyThemes.darkTheme,
-        themeMode: ThemeService().theme,
-        //IF USER USES AN UNKNOWN ROUTE PATH
-        onUnknownRoute: (RouteSettings routeSettings){
-          return MaterialPageRoute<void>(
-            settings: routeSettings,
-            builder: (BuildContext context) =>
-                const UnknownRoutePage(),
-          );
-        },
-        //defaultTransition: ,
-        routes: {
-            Home.routeName: (context) => Home(selectedIndex: 0,),
-            LoginScreen.routeName: (context) => const LoginScreen(),
-            RegistrationScreen.routeName: (context) => const RegistrationScreen(),
-            SettingsScreen.routeName: (context) => const SettingsScreen(),
-            ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
-            GoLiveScreen.routeName: (context) => const GoLiveScreen(),
-            ContactUs.routeName: (context) => const ContactUs(),
-
-          //BroadcastScreen.routeName: (context) => const BroadcastScreen(isBroadcaster: false, channelId: '',),
-          },
-        //THE FIRST SCREEN
-        home: const AuthWrapper(),
+        //THEME CUSTOMIZATION
+        theme: MyThemes.customTheme,
+        home: const NavigationScreen()//const AuthWrapper(),
       ),
     );
   }
@@ -127,7 +98,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
     //IF USER IS CONNECTED AND REMEMBER ME WAS CHECKED
     if (firebaseUser != null) {
-      return Home(selectedIndex: 0,);
+      return const NavigationScreen();
     }
     //IF IT'S THE USER'S FIRST TIME USING THE APP && DEVICE ISN'T WEB
     // if(onBoarding==null && !kIsWeb) {
@@ -137,3 +108,15 @@ class _AuthWrapperState extends State<AuthWrapper> {
     return const LoginScreen();
   }
 }
+
+// class AuthWrapper extends StatelessWidget {
+//   const AuthWrapper({super.key});
+//   @override
+//   Widget build(BuildContext context) {
+//     //passing user from here has more advantage than calling it directly in method
+//     final firebaseUser = context.watch<User?>(); // Get current user
+//     final authService = context.read<FirebaseAuthServices>(); // Access service
+//
+//     return authService.determineScreen(firebaseUser);
+//   }
+// }
