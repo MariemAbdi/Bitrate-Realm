@@ -109,7 +109,7 @@ class MyThemes{
           borderRadius: BorderRadius.circular(10)
       ),
     ),
-
+      
       navigationBarTheme: NavigationBarThemeData(
       elevation: 5,
       height: 70,

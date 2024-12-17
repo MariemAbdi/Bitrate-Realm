@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:livestream/config/routing.dart';
-import 'package:livestream/widgets/custom_outlined_button.dart';
+import 'package:bitrate_realm/config/routing.dart';
+import 'package:bitrate_realm/widgets/custom_outlined_button.dart';
+
+import '../../providers/user_provider.dart';
+import '../utils/loading_wrapper.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
   const HomeAppBar({Key? key}) : super(key: key);
@@ -15,7 +18,8 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
 class HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return LoadingWrapper<UserProvider>(
+        builder: (context, userProvider) => AppBar(
       automaticallyImplyLeading: false,
       leading: InkWell(
         onTap: profileNavigation,
@@ -27,7 +31,7 @@ class HomeAppBarState extends State<HomeAppBar> {
             child: AspectRatio(
               aspectRatio: 1,
               child: Image.network(
-                  "https://cdn.pixabay.com/photo/2022/11/10/07/15/portrait-7582123_640.jpg",
+                  userProvider.user!.pictureURL!,
                 height: 40,
                 width: 40,
                 fit: BoxFit.cover, // Ensures the image covers the area without exceeding
@@ -36,10 +40,15 @@ class HomeAppBarState extends State<HomeAppBar> {
           ),
         ),
       ),
-      title: const Expanded(
-        child: Text(
-          'Mariem Abdi',
-        ),
+      title: Row(
+        ///The title property of AppBar does not accept Expanded directly because it is not a Flex widget (like Row or Column)
+        children: [
+          Expanded(
+            child: Text(
+              userProvider.user!.username,
+            ),
+          ),
+        ],
       ),
       actions: const [
         Padding(
@@ -55,6 +64,6 @@ class HomeAppBarState extends State<HomeAppBar> {
           ),
         ),
       ],
-    );
+    ));
   }
 }

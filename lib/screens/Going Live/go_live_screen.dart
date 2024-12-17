@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:language_picker/language_picker_dialog.dart';
 import 'package:language_picker/languages.dart';
-import 'package:livestream/translations/locale_keys.g.dart';
+import 'package:bitrate_realm/translations/locale_keys.g.dart';
 
 import '../../models/live_stream.dart';
 import '../../config/utils.dart';

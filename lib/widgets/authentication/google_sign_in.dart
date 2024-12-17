@@ -2,13 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:livestream/config/routing.dart';
+import 'package:bitrate_realm/config/routing.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/spacing.dart';
-import '../../services/firebase_auth_services.dart';
+// import '../../services/firebase_auth_services.dart';
 import '../../config/app_style.dart';
 import '../../config/responsiveness.dart';
+import '../../providers/auth_provider.dart';
 import '../../translations/locale_keys.g.dart';
 import '../utils/custom_button.dart';
 
@@ -17,6 +18,8 @@ class GoogleSignIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Column(
       children: [
         kVerticalSpace,
@@ -51,7 +54,7 @@ class GoogleSignIn extends StatelessWidget {
 
         CustomButton(
             text: LocaleKeys.loginwithgoogle.tr(),
-            onPressed: () => context.read<FirebaseAuthServices>().signInWithGoogle(context),
+            onPressed: () {},//authProvider.signInWithGoogle,//context.read<FirebaseAuthServices>().signInWithGoogle(context),
           backgroundColor: MyThemes().googleColor,
           isUppercase: false,
           iconData: FontAwesomeIcons.googlePlusG,

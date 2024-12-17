@@ -15,6 +15,7 @@ import '../../services/firebase_auth_services.dart';
 import '../../services/firebase_storage_services.dart';
 import '../../config/app_style.dart';
 import '../../services/livestream_services.dart';
+import '../providers/auth_provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -57,11 +58,14 @@ class _SearchScreenState extends State<SearchScreen> {
             );
           } else if (snapshot.hasData) {
             final users = snapshot.data!;
-            users.removeWhere((element) => element.email== context.read<FirebaseAuthServices>().user.email);
+            users.removeWhere((element) => element.email==
+                Provider.of<AuthProvider>(context).user!.email
+                //context.read<FirebaseAuthServices>().user.email
+            );
             return ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
-                if (_searchController.text.isNotEmpty && users[index].nickname.toLowerCase().contains(_searchController.text.toLowerCase())) {
+                if (_searchController.text.isNotEmpty && users[index].username.toLowerCase().contains(_searchController.text.toLowerCase())) {
                   return ListTile(
                     leading: SizedBox(
                       height: 50,
@@ -112,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                       ),
                     ),
-                    title: Text(users[index].nickname),
+                    title: Text(users[index].username),
                     subtitle: Text(
                       users[index].bio,
                       overflow: TextOverflow.ellipsis,

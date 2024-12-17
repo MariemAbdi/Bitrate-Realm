@@ -12,15 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:livestream/config/routing.dart';
-import 'package:livestream/config/utils.dart';
-import 'package:livestream/translations/locale_keys.g.dart';
+import 'package:bitrate_realm/config/routing.dart';
+import 'package:bitrate_realm/config/utils.dart';
+import 'package:bitrate_realm/translations/locale_keys.g.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 
 import '../../models/live_stream.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../config/app_style.dart';
 import '../../services/livestream_services.dart';
@@ -139,7 +140,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
 
   Future<void> getToken() async {
     final res = await http.get(
-      Uri.parse('${dotenv.env["RENDER_BASEURL"]}/rtc/${widget.channelId}/publisher/userAccount/${context.read<FirebaseAuthServices>().user.uid}/'),
+      Uri.parse('${dotenv.env["RENDER_BASEURL"]}/rtc/${widget.channelId}/publisher/userAccount/${
+          // context.read<FirebaseAuthServices>().user.uid
+          Provider.of<AuthProvider>(context).user!.uid
+      }/'),
     );
 
     if (res.statusCode == 200) {
@@ -193,7 +197,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
         await [Permission.microphone, Permission.camera].request();
       }
       //if(!mounted)return;
-      await _engine.joinChannelWithUserAccount(token, widget.channelId, context.read<FirebaseAuthServices>().user.uid);
+      await _engine.joinChannelWithUserAccount(token, widget.channelId,
+         // context.read<FirebaseAuthServices>().user.uid
+          Provider.of<AuthProvider>(context).user!.uid
+      );
     }
   }
 
@@ -235,7 +242,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (p) async {
-        customConfirmationCoolAlert(context, LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json", ()async {await _leaveChannel(context.read<FirebaseAuthServices>().user.uid);});
+        customConfirmationCoolAlert(context, LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json", ()async {await _leaveChannel(
+           // context.read<FirebaseAuthServices>().user.uid
+            Provider.of<AuthProvider>(context).user!.uid
+        );});
         return Future.value(true);
       },
       child: Scaffold(
@@ -251,7 +261,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
               child: CustomButton(text: LocaleKeys.leave.tr(), onPressed: (){
                 customConfirmationCoolAlert(context, LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json",
                   ()async {
-                  await _leaveChannel(context.read<FirebaseAuthServices>().user.uid);
+                  await _leaveChannel(
+                      Provider.of<AuthProvider>(context).user!.uid
+                     // context.read<FirebaseAuthServices>().user.uid
+                  );
                 });
               },),
             ),

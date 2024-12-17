@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:livestream/constants/spacing.dart';
+import 'package:bitrate_realm/constants/spacing.dart';
 import 'package:rive/rive.dart';
 
 import '../../config/app_style.dart';

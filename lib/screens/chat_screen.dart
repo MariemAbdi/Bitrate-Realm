@@ -4,18 +4,19 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:livestream/config/utils.dart';
-import 'package:livestream/Widgets/my_appbar.dart';
+import 'package:bitrate_realm/config/utils.dart';
+import 'package:bitrate_realm/Widgets/my_appbar.dart';
 import 'package:provider/provider.dart';
 
-import '../../Services/firebase_auth_services.dart';
-import '../../config/app_style.dart';
-import '../../Widgets/single_message.dart';
+import '../Services/firebase_auth_services.dart';
+import '../config/app_style.dart';
+import '../Widgets/single_message.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart' hide Trans;
 
-import '../../translations/locale_keys.g.dart';
+import '../providers/auth_provider.dart';
+import '../translations/locale_keys.g.dart';
 
 
 class ChatScreen extends StatefulWidget {
@@ -75,13 +76,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
     //SEND MESSAGE
     sendMessage() async{
-    final user = context.read<FirebaseAuthServices>().user;
-
+    // final user = context.read<FirebaseAuthServices>().user;
+      final user = Provider.of<AuthProvider>(context).user;
       String message=_controller.text;
       _controller.clear();
-      await FirebaseFirestore.instance.collection('users').doc(user.email)
+      await FirebaseFirestore.instance.collection('users').doc(user!.email)
           .collection('messages').doc(widget.receiver).collection('chats').add({
-        "senderId":user.email,
+        "senderId":user!.email,
         "receiverId":widget.receiver,
         "message":message,
         "type":"text",
@@ -155,8 +156,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<FirebaseAuthServices>().user;
-
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
     return RefreshIndicator(
       color: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.secondaryLight:Colors.white,
       backgroundColor: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.primaryLight:Colors.grey.shade800,
@@ -179,7 +180,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(10),
                     child: StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection('users').doc(user.email).collection('messages').doc(widget.receiver).collection('chats').orderBy('date', descending: true).snapshots(),
+                      stream: FirebaseFirestore.instance.collection('users').doc(user!.email).collection('messages').doc(widget.receiver).collection('chats').orderBy('date', descending: true).snapshots(),
                       builder: (context,AsyncSnapshot snapshot){
                         if(snapshot.hasData){
                           return ListView.builder(
@@ -187,7 +188,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               reverse: true,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context,index){
-                                bool isMe=snapshot.data.docs[index]['senderId'].compareTo(user.email)==0;
+                                bool isMe=snapshot.data.docs[index]['senderId'].compareTo(user!.email)==0;
                                 return  SingleMessage(isMe: isMe,message: snapshot.data.docs[index]['message'],receiverId: widget.receiver,type: snapshot.data.docs[index]['type'],sent: getTimeAgo(snapshot.data.docs[index]['date'].toDate()),);
                               });
                         }

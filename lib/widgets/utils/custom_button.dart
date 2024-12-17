@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:livestream/config/app_style.dart';
-import 'package:livestream/constants/spacing.dart';
+import '../../config/app_style.dart';
+import '../../constants/spacing.dart';
 
 class CustomButton extends StatelessWidget {
   final String text;
@@ -9,7 +9,7 @@ class CustomButton extends StatelessWidget {
 
   final bool isUppercase;
   final IconData? iconData;
-  const CustomButton({Key? key, required this.text, this.backgroundColor = MyThemes.primaryLight, required this.onPressed, this.isUppercase = true, this.iconData}) : super(key: key);
+  const CustomButton({Key? key, required this.text, this.backgroundColor = MyThemes.primaryColor, required this.onPressed, this.isUppercase = true, this.iconData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

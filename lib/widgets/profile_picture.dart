@@ -7,7 +7,7 @@ import '../config/app_style.dart';
 
 class ProfilePicture extends StatelessWidget {
   final String id;
-  final Storage storage;
+  final FirebaseStorageServices storage;
   final Uint8List? image;
   const ProfilePicture({Key? key, required this.id, required this.storage, required this.image}) : super(key: key);
 

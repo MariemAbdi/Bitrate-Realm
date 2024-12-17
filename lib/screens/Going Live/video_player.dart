@@ -5,12 +5,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
-import 'package:livestream/Widgets/chat_livestream.dart';
-import 'package:livestream/Widgets/my_appbar.dart';
+import 'package:bitrate_realm/Widgets/chat_livestream.dart';
+import 'package:bitrate_realm/Widgets/my_appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../models/live_stream.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -30,12 +31,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   late bool isAlreadyLiked=false;
 
   void fetchData() async{
-    final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
+    // final user = context.read<FirebaseAuthServices>().user;
 
     FirebaseFirestore.instance.collection("videos").doc(widget.video.id).get().then((DocumentSnapshot documentSnapshot) {
       setState(() {
         likesCount = documentSnapshot["likes"].length;
-        isAlreadyLiked = documentSnapshot["likes"].contains(user.email);
+        isAlreadyLiked = documentSnapshot["likes"].contains(user!.email);
       });
     }
     );
@@ -89,7 +91,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<FirebaseAuthServices>().user;
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
 
     return Scaffold(
       appBar: MyAppBar(implyLeading:true, title: widget.video.title, action: Container(),),
@@ -111,7 +114,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(child: Text(widget.video.title,style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20,)))),
-                        likeButton(user.email!),
+                        likeButton(user!.email!),
                       ],
                     ),
 

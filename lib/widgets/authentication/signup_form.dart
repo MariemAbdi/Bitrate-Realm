@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:livestream/models/user.dart';
+import 'package:bitrate_realm/models/user.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/spacing.dart';
@@ -51,7 +51,7 @@ class _SignupFormState extends State<SignupForm> {
     if (_formKey.currentState?.validate() ?? false) {
       UserModel userModel = UserModel(
         email: _emailController.text.trim(),
-        nickname: _nicknameController.text.trim(),
+        username: _nicknameController.text.trim(),
         password: _passwordController.text.trim(),
       );
 

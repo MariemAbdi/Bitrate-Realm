@@ -10,16 +10,17 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:livestream/Screens/Settings/about_us.dart';
-import 'package:livestream/Screens/Settings/contact_us.dart';
-import 'package:livestream/Screens/Settings/edit_profile.dart';
-import 'package:livestream/Screens/Settings/favourite_videos.dart';
-import 'package:livestream/Widgets/my_appbar.dart';
-import 'package:livestream/config/utils.dart';
+import 'package:bitrate_realm/Screens/Settings/about_us.dart';
+import 'package:bitrate_realm/Screens/Settings/contact_us.dart';
+import 'package:bitrate_realm/Screens/Settings/edit_profile.dart';
+import 'package:bitrate_realm/Screens/Settings/favourite_videos.dart';
+import 'package:bitrate_realm/Widgets/my_appbar.dart';
+import 'package:bitrate_realm/config/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../config/app_style.dart';
 import '../../services/theme_services.dart';
@@ -361,7 +362,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             'user_id': publicKey,
             'template_params': {
               "subject": "APPLICATION RATING",
-              "email": context.read<FirebaseAuthServices>().user.email,
+              "email": Provider.of<AuthProvider>(context).user,//context.read<FirebaseAuthServices>().user.email,
               "message": "$_rating/5",
             },
           }));

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:livestream/config/validators.dart';
+import 'package:bitrate_realm/config/validators.dart';
 
 import '../../translations/locale_keys.g.dart';
 class NicknameField extends StatefulWidget {

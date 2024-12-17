@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:livestream/config/utils.dart';
-import 'package:livestream/config/app_style.dart';
-import 'package:livestream/widgets/my_appbar.dart';
+import 'package:bitrate_realm/config/utils.dart';
+import 'package:bitrate_realm/config/app_style.dart';
+import 'package:bitrate_realm/widgets/my_appbar.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../translations/locale_keys.g.dart';
 import '../../widgets/input/custom_text_field.dart';
@@ -46,7 +47,7 @@ class _ContactUsState extends State<ContactUs> {
       'user_id': publicKey,
       'template_params': {
         "subject": _subject.text.trim(),
-        "email": context.read<FirebaseAuthServices>().user.email,
+        "email": Provider.of<AuthProvider>(context).user!.email,//context.read<FirebaseAuthServices>().user.email,
         "message": _body.text.trim(),
       },
     }));

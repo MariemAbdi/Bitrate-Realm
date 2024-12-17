@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 
-class CustomListView extends StatelessWidget {
-  const CustomListView({super.key,required this.itemCount, required this.itemBuilder, this.isVertical=true, this.padding= EdgeInsets.zero, this.physics= const BouncingScrollPhysics(), this.controller});
+class CustomGridView extends StatelessWidget {
+  const CustomGridView({super.key, this.bottomPadding = true, this.fixedCrossAxis=0, this.aspectRatio=1/1, required this.itemCount, required this.itemBuilder});
 
+  final bool bottomPadding;
   final Widget? Function(BuildContext,int) itemBuilder;
-  final int itemCount;
-  final EdgeInsetsGeometry padding;
-  final bool isVertical;
-  final ScrollPhysics physics;
+  final int itemCount,fixedCrossAxis;
+  final double aspectRatio;
 
-  final ScrollController? controller;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: itemCount,
+    return GridView.builder(
         shrinkWrap: true,
-        padding: padding,
-        physics: physics,
-        controller: controller,
-        scrollDirection: isVertical ? Axis.vertical : Axis.horizontal,
-        itemBuilder: itemBuilder
-    );
+        physics: const NeverScrollableScrollPhysics(),
+        padding: bottomPadding?const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 60):EdgeInsets.zero,
+        gridDelegate: fixedCrossAxis!=0
+            ?SliverGridDelegateWithFixedCrossAxisCount(
+          //mainAxisExtent: 110,
+            crossAxisCount: fixedCrossAxis,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5
+        )
+            :SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: aspectRatio,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5),
+        itemCount: itemCount,
+        itemBuilder: itemBuilder);
   }
 }

@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:livestream/widgets/authentication/auth_desktop.dart';
-import 'package:livestream/widgets/authentication/auth_mobile.dart';
-import 'package:livestream/widgets/authentication/reset_password_form.dart';
-import 'package:livestream/config/responsiveness.dart';
-import 'package:livestream/config/routing.dart';
+import 'package:bitrate_realm/widgets/authentication/auth_desktop.dart';
+import 'package:bitrate_realm/widgets/authentication/auth_mobile.dart';
+import 'package:bitrate_realm/widgets/authentication/reset_password_form.dart';
+import 'package:bitrate_realm/config/responsiveness.dart';
+import 'package:bitrate_realm/config/routing.dart';
 
 import '../translations/locale_keys.g.dart';
 

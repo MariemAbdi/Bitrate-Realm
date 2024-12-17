@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:livestream/screens/Settings/settings_screen.dart';
-import 'package:livestream/screens/navigation.dart';
-import 'package:livestream/screens/profile.dart';
+import 'package:bitrate_realm/screens/Settings/settings_screen.dart';
+import 'package:bitrate_realm/screens/navigation.dart';
+import 'package:bitrate_realm/screens/profile.dart';
 
 import '../screens/forgot_password.dart';
 import '../screens/login.dart';

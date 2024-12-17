@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:livestream/widgets/utils/custom_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
+import '../../widgets/utils/custom_button.dart';
 import '../../widgets/input/email_field.dart';
 import '../../widgets/input/multi_line_field.dart';
 import '../../widgets/input/nickname_field.dart';
@@ -35,9 +36,9 @@ class _EditProfileState extends State<EditProfile> {
   late String oldPassword ="";
 
   void _fetchData(BuildContext context) async{
-    final user = context.read<FirebaseAuthServices>().user;
-
-    FirebaseFirestore.instance.collection("users").doc(user.email).get().then((DocumentSnapshot documentSnapshot) {
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
+    FirebaseFirestore.instance.collection("users").doc(user!.email).get().then((DocumentSnapshot documentSnapshot) {
       setState(() {
         _nicknameController.text=documentSnapshot["nickname"];
         _bioController.text=documentSnapshot["bio"];
@@ -49,10 +50,10 @@ class _EditProfileState extends State<EditProfile> {
 
   //CHECK IF THE USER IS CONNECTED VIA A GOOGLE ACCOUNT THEN THE CHANGE PASSWORD FIELD WON'T SHOW UP
   void checkConnection()async{
-    final user = context.read<FirebaseAuthServices>().user;
-
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
     //IF CONNECTED USING A GOOGLE ACCOUNT
-    var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(user.email!);
+    var methods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(user!.email!);
     if (methods.contains('google.com')) {
       setState(() {
         isConnectedWithMail=false;
@@ -82,8 +83,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.read<FirebaseAuthServices>().user;
-
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
     return Scaffold(
       appBar: MyAppBar(implyLeading: true, title: LocaleKeys.editProfile.tr(), action: Container(),),
       body: SingleChildScrollView(
@@ -133,7 +134,7 @@ class _EditProfileState extends State<EditProfile> {
                   }
 
                   //--------------------------UPDATE EMAIL--------------------------
-                  user.updateEmail(_emailController.text.trim());
+                  user!.updateEmail(_emailController.text.trim());
 
                   //--------------------------UPDATE DISPLAY NAME--------------------------
                   user.updateDisplayName(_nicknameController.text.trim());

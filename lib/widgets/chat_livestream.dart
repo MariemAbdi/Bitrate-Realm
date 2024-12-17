@@ -1,15 +1,14 @@
+import 'package:bitrate_realm/services/livestream_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:livestream/Models/live_stream.dart';
-import 'package:livestream/config/app_style.dart';
-import 'package:livestream/Services/livestream_services.dart';
+import 'package:bitrate_realm/config/app_style.dart';
 import 'package:provider/provider.dart';
 
-import '../Services/firebase_auth_services.dart';
+import '../providers/auth_provider.dart';
+import '../services/firebase_auth_services.dart';
 import '../translations/locale_keys.g.dart';
 
 class Chat extends StatefulWidget {
@@ -32,8 +31,8 @@ class _ChatState extends State<Chat> {
   }
   @override
   Widget build(BuildContext context) {
-    final user = context.read<FirebaseAuthServices>().user;
-
+    // final user = context.read<FirebaseAuthServices>().user;
+    final user = Provider.of<AuthProvider>(context).user;
     //MESSAGE FIELD WIDGET
     Widget messageField(){
       return Row(
@@ -71,7 +70,7 @@ class _ChatState extends State<Chat> {
                 },
                 onFieldSubmitted: (msg){
                   //SEND MESSAGE
-                  LiveStreamServices().addComment(widget.collectionName, widget.docId,_chatController.text.trim(),user.displayName!, widget.docId, context);
+                  LiveStreamServices().addComment(widget.collectionName, widget.docId,_chatController.text.trim(),user!.displayName!, widget.docId, context);
                   _chatController.clear();
                   setState(() {});
                 },
@@ -81,7 +80,7 @@ class _ChatState extends State<Chat> {
           GestureDetector(
             onTap: (){
               //SEND MESSAGE
-              LiveStreamServices().addComment(widget.collectionName, widget.docId,_chatController.text.trim(),user.displayName!, widget.docId, context);
+              LiveStreamServices().addComment(widget.collectionName, widget.docId,_chatController.text.trim(),user!.displayName!, widget.docId, context);
               _chatController.clear();
               setState(() {});
             },
@@ -114,7 +113,7 @@ class _ChatState extends State<Chat> {
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(snapshot.data.docs[index]['nickname'], style: GoogleFonts.ptSans(fontWeight:FontWeight.w900, color: snapshot.data.docs[index]['uid'] == user.uid ? MyThemes.primaryLight : MyThemes.secondaryLight),overflow: TextOverflow.ellipsis, maxLines: 1,),
+                              Text(snapshot.data.docs[index]['nickname'], style: GoogleFonts.ptSans(fontWeight:FontWeight.w900, color: snapshot.data.docs[index]['uid'] == user!.uid ? MyThemes.primaryLight : MyThemes.secondaryLight),overflow: TextOverflow.ellipsis, maxLines: 1,),
                               Text(DateFormat('dd/MM/yyyy HH:mm').format((snapshot.data.docs[index]['createdAt']).toDate()), style: GoogleFonts.ptSans(fontSize: 12)),
                             ],
                           ),

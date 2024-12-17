@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:livestream/models/user.dart';
+import 'package:bitrate_realm/models/user.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/spacing.dart';
+import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../config/assets_paths.dart';
 import '../../config/routing.dart';
@@ -51,7 +52,11 @@ class _LoginFormState extends State<LoginForm> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      context.read<FirebaseAuthServices>().signInWithEmailAndPassword(userModel: userModel);
+      
+      // context.read<FirebaseAuthServices>().signInWithEmailAndPassword(userModel: userModel);
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.loginWithEmail(_emailController.text.trim(), _passwordController.text.trim());
+
     }
   }
 
