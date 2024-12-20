@@ -20,8 +20,8 @@ class UserModel{
       email: json['email'] ?? "",
       username: json['username'] ?? "",
       bio: json['bio'] ?? "",
-      pictureURL: json['pictureURL'] ?? "",
-      coverURL: json['coverURL'] ?? "",
+      pictureURL: json['pictureURL'],
+      coverURL: json['coverURL'],
       followers: json['followers'].cast<String>() ?? [],
       following: json['following'].cast<String>() ?? [],
       );

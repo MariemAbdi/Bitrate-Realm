@@ -13,10 +13,8 @@ class NavigationScreen extends StatefulWidget {
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
 }
-
 class _NavigationScreenState extends State<NavigationScreen>{
   int selectedIndex = 0;
-
   updateIndex(int index){
     setState(() {
       selectedIndex = index;

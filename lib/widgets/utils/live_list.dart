@@ -1,3 +1,4 @@
+import 'package:bitrate_realm/config/responsiveness.dart';
 import 'package:bitrate_realm/widgets/utils/user_info_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,7 +25,7 @@ class LiveList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: StaggeredGrid.count(
-        crossAxisCount: 2, // 2 columns
+        crossAxisCount: Responsiveness.isMobile(context) ? 2 : 4, // 2 columns
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         children: imageUrls.map((photo) {
@@ -81,7 +82,6 @@ class LiveList extends StatelessWidget {
             ],
           );
         }).toList(),
-        //staggeredTileBuilder: (index) => StaggeredTile.fit(1), // Adapts to image height
       ),
     );
   }

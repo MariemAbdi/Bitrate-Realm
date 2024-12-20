@@ -6,7 +6,6 @@ import '../config/responsiveness.dart';
 import '../config/routing.dart';
 import '../../widgets/authentication/auth_desktop.dart';
 import '../../widgets/authentication/auth_mobile.dart';
-import '../../config/app_style.dart';
 import '../../translations/locale_keys.g.dart';
 
 class RegistrationScreen extends StatelessWidget {
@@ -16,18 +15,16 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     String title = LocaleKeys.alredayamember.tr();
     String buttonText = LocaleKeys.signinnow.tr();
-    return Theme(
-      data: MyThemes.customTheme,
-      child: Scaffold(
-        body: Responsiveness(
-          mobileBody: const AuthMobile(formWidget: SignupForm()),
-          desktopBody: AuthDesktop(
-                title: title,
-                formWidget: const SignupForm(),
-                buttonText: buttonText,
-                onPressed: loginNavigation
-            ),
-      ),
-    ));
+    return Scaffold(
+      body: Responsiveness(
+        mobileBody: const AuthMobile(formWidget: SignupForm()),
+        desktopBody: AuthDesktop(
+              title: title,
+              formWidget: const SignupForm(),
+              buttonText: buttonText,
+              onPressed: loginNavigation
+          ),
+    ),
+        );
   }
 }

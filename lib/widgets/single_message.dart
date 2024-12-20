@@ -29,7 +29,7 @@ class _SingleMessageState extends State<SingleMessage> {
           padding: const EdgeInsets.all(15),
           margin: const EdgeInsets.all(3),
           constraints: const BoxConstraints(maxWidth: 300),
-          decoration: BoxDecoration(color: widget.isMe? MyThemes.primaryLight: MyThemes.secondaryLight,
+          decoration: BoxDecoration(//color: widget.isMe? MyThemes.primaryLight: MyThemes.secondaryLight,
               borderRadius: const BorderRadius.all(Radius.circular(12))),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,9 +43,10 @@ class _SingleMessageState extends State<SingleMessage> {
           height: MediaQuery.of(context).size.height/2.5,
           width: MediaQuery.of(context).size.width/2,
           decoration: BoxDecoration(border: Border.all(),
-            color: widget.isMe? MyThemes.primaryLight.withOpacity(0.5): MyThemes.secondaryLight.withOpacity(0.5),),
+            //color: widget.isMe? MyThemes.primaryLight.withOpacity(0.5): MyThemes.secondaryLight.withOpacity(0.5),
+            ),
           child: widget.message!=""?Image.network(widget.message,fit: BoxFit.contain,):
-          const CircularProgressIndicator(color: MyThemes.primaryLight,),
+          const CircularProgressIndicator(),
         ),
       ],
     );

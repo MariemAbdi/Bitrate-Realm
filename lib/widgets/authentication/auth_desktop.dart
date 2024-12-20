@@ -73,8 +73,8 @@ class AuthDesktop extends StatelessWidget {
                               width: 200,
                               height: 50,
                               child: CustomButton(
-                                  backgroundColor: MyThemes.darkRed,
                                   text: buttonText,
+                                  isUppercase: true,
                                   onPressed: onPressed
                               )
                           ),

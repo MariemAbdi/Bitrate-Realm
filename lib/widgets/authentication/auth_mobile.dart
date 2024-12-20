@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bitrate_realm/config/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
@@ -48,7 +49,7 @@ return Stack(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      color: Colors.white,
+                      color: MyThemes.secondaryColor,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.8),

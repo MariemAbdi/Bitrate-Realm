@@ -1,9 +1,13 @@
+import 'package:bitrate_realm/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bitrate_realm/screens/Settings/settings_screen.dart';
-import 'package:bitrate_realm/screens/navigation.dart';
-import 'package:bitrate_realm/screens/profile.dart';
 
+import '../screens/about_us.dart';
+import '../screens/contact_us.dart';
+import '../screens/edit_profile.dart';
+import '../screens/settings_screen.dart';
+import '../screens/navigation.dart';
+import '../screens/profile.dart';
 import '../screens/forgot_password.dart';
 import '../screens/login.dart';
 import '../screens/registration.dart';
@@ -21,27 +25,43 @@ void goTo(Widget route){
   );
 }
 
-homeNavigation(){
+void homeNavigation(){
   goTo(const NavigationScreen());
 }
 
-profileNavigation(){
+void profileNavigation(){
   goTo(const ProfileScreen());
 }
 
-settingsNavigation(){
+void editProfileNavigation(){
+  goTo(const EditProfile());
+}
+
+void aboutUsNavigation(){
+  goTo(const AboutUs());
+}
+
+void contactUsNavigation(){
+  goTo(const ContactUs());
+}
+
+void settingsNavigation(){
   goTo(const SettingsScreen());
 }
 
-loginNavigation(){
+void loginNavigation(){
   goTo(const LoginScreen());
 }
 
-signUpNavigation(){
+void searchNavigation(){
+  goTo(const SearchScreen());
+}
+
+void signUpNavigation(){
   goTo(const RegistrationScreen());
 }
 
-forgotPasswordNavigation(){
+void forgotPasswordNavigation(){
   goTo(const ForgotPasswordScreen());
 }
 

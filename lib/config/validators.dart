@@ -20,13 +20,11 @@ class Validators{
     return null;
   }
 
-  String? passwordValidation(String? password, bool requireValidation){
-    if(requireValidation){
-      if (password!.isEmpty) {
-        return LocaleKeys.passwordfieldcantbeempty.tr();
-      } else if (password.length < 6) {
-        return LocaleKeys.passwordmustbeatleast6characters.tr();
-      }
+  String? passwordValidation(String? password){
+    if (password!.isEmpty) {
+      return LocaleKeys.passwordfieldcantbeempty.tr();
+    } else if (password.length < 6) {
+      return LocaleKeys.passwordmustbeatleast6characters.tr();
     }
     return null;
   }

@@ -3,6 +3,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/validators.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../translations/locale_keys.g.dart';
 class NicknameField extends StatefulWidget {
@@ -25,6 +26,7 @@ class _NicknameFieldState extends State<NicknameField> {
         AutofillHints.name,
         AutofillHints.nickname
       ],
+      style: context.textTheme.headlineSmall,
       decoration: InputDecoration(
           labelText: LocaleKeys.nickname.tr(),
           hintText: LocaleKeys.enteryournickname.tr(),

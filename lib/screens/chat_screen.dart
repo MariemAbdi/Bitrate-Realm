@@ -5,17 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:bitrate_realm/config/utils.dart';
-import 'package:bitrate_realm/Widgets/my_appbar.dart';
 import 'package:provider/provider.dart';
 
-import '../Services/firebase_auth_services.dart';
+import '../services/firebase_auth_services.dart';
 import '../config/app_style.dart';
 import '../Widgets/single_message.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:get/get.dart' hide Trans;
 
-import '../providers/auth_provider.dart';
 import '../translations/locale_keys.g.dart';
 
 
@@ -23,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 
   final String receiver;
 
-  const ChatScreen({super.key, required this.receiver,});
+  const ChatScreen({super.key, required this.receiver});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -39,7 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _fetchData() async{
     FirebaseFirestore.instance.collection("users").doc(widget.receiver).get().then((DocumentSnapshot documentSnapshot) {
       setState(() {
-        receiverName=documentSnapshot["nickname"];
+        receiverName=documentSnapshot["username"];
       });
     }
     );
@@ -69,15 +67,13 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     _fetchData();
-
-
   }
-
 
     //SEND MESSAGE
     sendMessage() async{
     // final user = context.read<FirebaseAuthServices>().user;
-      final user = Provider.of<AuthProvider>(context).user;
+      //final user = Provider.of<AuthProvider>(context).user;
+      final user = FirebaseAuthServices().user!;
       String message=_controller.text;
       _controller.clear();
       await FirebaseFirestore.instance.collection('users').doc(user!.email)
@@ -146,7 +142,9 @@ class _ChatScreenState extends State<ChatScreen> {
               },
               child: Padding(
                 padding: const EdgeInsets.all(8),
-                child: Icon(Icons.telegram,color: MyThemes.primaryLight, size: MediaQuery.of(context).size.width*0.12,),
+                child: Icon(Icons.telegram,
+                 // color: MyThemes.primaryLight,
+                  size: MediaQuery.of(context).size.width*0.12,),
               ),
             )
           ],
@@ -157,10 +155,10 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     // final user = context.read<FirebaseAuthServices>().user;
-    final user = Provider.of<AuthProvider>(context).user;
+    final user = FirebaseAuthServices().user!;
     return RefreshIndicator(
-      color: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.secondaryLight:Colors.white,
-      backgroundColor: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.primaryLight:Colors.grey.shade800,
+     // color: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.secondaryLight:Colors.white,
+      //backgroundColor: Theme.of(context).brightness==MyThemes.customTheme.brightness?MyThemes.primaryLight:Colors.grey.shade800,
       onRefresh: ()async{
         _fetchData();
       },
@@ -170,7 +168,7 @@ class _ChatScreenState extends State<ChatScreen> {
         },
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          appBar: MyAppBar(implyLeading: true, title: receiverName, action: Container()),
+          //appBar: MyAppBar(implyLeading: true, title: receiverName, action: Container()),
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -193,7 +191,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               });
                         }
                         //intl.DateFormat("dd/MM/yyyy kk:mm").format(snapshot.data.docs[index]['date'].toDate())
-                        return const Center(child: CircularProgressIndicator(color: MyThemes.primaryLight,),);
+                        return const Center(child: CircularProgressIndicator(),);
                       },
                     ),
                   ),

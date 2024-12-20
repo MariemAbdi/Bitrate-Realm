@@ -47,7 +47,7 @@ class _VideoWidgetState extends State<VideoWidget> {
           );
         }
 
-        return const Center(child: CircularProgressIndicator(color: MyThemes.primaryLight,),);
+        return const Center(child: CircularProgressIndicator(),);
       },
     );
   }
@@ -62,7 +62,7 @@ class _VideoWidgetState extends State<VideoWidget> {
               width: 30,
               height: 30,
               decoration: BoxDecoration(
-                  color: MyThemes.primaryLight,
+                 // color: MyThemes.primaryLight,
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -71,7 +71,7 @@ class _VideoWidgetState extends State<VideoWidget> {
 
         }
 
-        return const Center(child: CircularProgressIndicator(color: MyThemes.primaryLight,),);
+        return const Center(child: CircularProgressIndicator(),);
       },
     );
   }

@@ -5,11 +5,10 @@ import '../../constants/spacing.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final Color backgroundColor;
-  final VoidCallback onPressed;
-
+  final VoidCallback? onPressed;
   final bool isUppercase;
   final IconData? iconData;
-  const CustomButton({Key? key, required this.text, this.backgroundColor = MyThemes.primaryColor, required this.onPressed, this.isUppercase = true, this.iconData}) : super(key: key);
+  const CustomButton({Key? key, required this.text, this.backgroundColor = MyThemes.primaryColor, required this.onPressed, this.isUppercase = false, this.iconData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

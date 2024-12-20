@@ -38,7 +38,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
   void resetPassword() async{
     if (_formKey.currentState?.validate() ?? false) {
-    context.read<FirebaseAuthServices>().resetPassword(context, _emailController.text.trim()).whenComplete(() => _emailController.clear());
+    context.read<FirebaseAuthServices>().resetPassword(_emailController.text.trim()).whenComplete(() => _emailController.clear());
     }
   }
 
@@ -71,8 +71,9 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
 
           //VALIDATION BUTTON
           CustomButton(
-              text: LocaleKeys.done.tr(),
-              onPressed: resetPassword
+            text: LocaleKeys.done.tr(),
+            onPressed: resetPassword,
+            isUppercase: true,
           ),
 
         ],

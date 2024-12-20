@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -24,6 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       },
       controller: widget.controller,
       keyboardType: TextInputType.text,
+      style: context.textTheme.headlineSmall,
       decoration: InputDecoration(
           labelText: widget.label,
           hintText: widget.hint,

@@ -5,8 +5,7 @@ class CustomListView extends StatelessWidget {
     super.key,
     required this.itemCount,
     required this.itemBuilder,
-    this.controller,
-    this.height = 200,
+    this.height,
     this.padding = const EdgeInsets.symmetric(horizontal: 20),
     this.physics= const ClampingScrollPhysics(),
   });
@@ -16,8 +15,6 @@ class CustomListView extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double? height;
   final ScrollPhysics physics;
-
-  final ScrollController? controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +25,6 @@ class CustomListView extends StatelessWidget {
           shrinkWrap: true,
           padding: padding,
           physics: physics,
-          controller: controller,
           scrollDirection: height==null ? Axis.vertical : Axis.horizontal,
           itemBuilder: itemBuilder
       ),

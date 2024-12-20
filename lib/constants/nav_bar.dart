@@ -1,3 +1,4 @@
+import 'package:bitrate_realm/screens/chat_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/app_style.dart';
@@ -10,7 +11,7 @@ import '../translations/locale_keys.g.dart';
 final navigationScreens=[
   const HomeScreen(),
   const DiscoverScreen(),
-  const HomeScreen(),
+  const ChatScreen(receiver: "maryouma7264@hotmail.fr"),
   const GoLiveScreen(),
 ];
 

@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-import 'package:bitrate_realm/models/user.dart';
-import 'package:provider/provider.dart';
 
 import '../../constants/spacing.dart';
-import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../config/assets_paths.dart';
 import '../../config/routing.dart';
@@ -48,15 +45,10 @@ class _LoginFormState extends State<LoginForm> {
 
   void signIn() async{
     if (_formKey.currentState?.validate() ?? false) {
-      UserModel userModel = UserModel(
+      FirebaseAuthServices().signInWithEmailAndPassword(
         email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        password: _passwordController.text.trim()
       );
-      
-      // context.read<FirebaseAuthServices>().signInWithEmailAndPassword(userModel: userModel);
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      authProvider.loginWithEmail(_emailController.text.trim(), _passwordController.text.trim());
-
     }
   }
 
@@ -92,7 +84,7 @@ class _LoginFormState extends State<LoginForm> {
           EmailField(emailController: _emailController),
           kVerticalSpace,
 
-          PasswordField(passwordController: _passwordController, requireValidation: true),
+          PasswordField(passwordController: _passwordController),
 
           //----------------------------------FORGOT PASSWORD-------------------------------------------------
           Row(
@@ -113,8 +105,9 @@ class _LoginFormState extends State<LoginForm> {
 
           //VALIDATION BUTTON
           CustomButton(
-              text: LocaleKeys.signin.tr(),
-              onPressed: signIn
+            text: LocaleKeys.signin.tr(),
+            onPressed: signIn,
+            isUppercase: true,
           ),
 
           //-------------------------------GOOGLE AUTHENTICATION--------------------------------------------

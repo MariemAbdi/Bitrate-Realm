@@ -12,7 +12,6 @@ import 'package:bitrate_realm/translations/locale_keys.g.dart';
 import '../../services/livestream_services.dart';
 import '../../widgets/input/custom_text_field.dart';
 import '../../widgets/input/multi_line_field.dart';
-import '../../widgets/my_appbar.dart';
 import '../../models/live_stream.dart';
 import '../../services/firebase_storage_services.dart';
 import '../../config/utils.dart';
@@ -81,7 +80,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(implyLeading: true, title: LocaleKeys.upload.tr(), action: Container()),
+      //appBar: CustomAppBar(implyLeading: true, title: LocaleKeys.upload.tr(), action: Container()),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -117,7 +116,7 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                               width: double.infinity,
                               height: 200,
                               decoration: BoxDecoration(
-                                  color: MyThemes.primaryLight.withOpacity(0.05),
+                                  //color: MyThemes.primaryLight.withOpacity(0.05),
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       image: MemoryImage(image!),
@@ -127,21 +126,20 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                                 borderType: BorderType.RRect,
                                 radius: const Radius.circular(10),
                                 dashPattern: const [10, 4],
-                                color: MyThemes.primaryLight,
+                               // color: MyThemes.primaryLight,
                                 strokeCap: StrokeCap.round,
                                 child: Container(
                                   width: double.infinity,
                                   height: 200,
                                   decoration: BoxDecoration(
-                                      color:
-                                      MyThemes.primaryLight.withOpacity(0.05),
+                                     // color: MyThemes.primaryLight.withOpacity(0.05),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Icon(
                                         Icons.folder_open,
-                                        color: MyThemes.primaryLight,
+                                        //color: MyThemes.primaryLight,
                                         size: 40,
                                       ),
                                       const SizedBox(
@@ -181,21 +179,20 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
                                 borderType: BorderType.RRect,
                                 radius: const Radius.circular(10),
                                 dashPattern: const [10, 4],
-                                color: MyThemes.primaryLight,
+                                //color: MyThemes.primaryLight,
                                 strokeCap: StrokeCap.round,
                                 child: Container(
                                   width: double.infinity,
                                   height: 80,
                                   decoration: BoxDecoration(
-                                      color:
-                                      MyThemes.primaryLight.withOpacity(0.05),
+                                      //color: MyThemes.primaryLight.withOpacity(0.05),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Icon(
                                         Icons.video_call_sharp,
-                                        color: MyThemes.primaryLight,
+                                       // color: MyThemes.primaryLight,
                                         size: 40,
                                       ),
                                       const SizedBox(

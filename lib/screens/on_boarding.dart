@@ -30,11 +30,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     const Color(0xffffaf4e),
     const Color(0xff1eb090),
     const Color(0xffffbe97),
-    MyThemes.primaryLight,//Colors.indigo.shade500,
+    MyThemes.primaryColor,//Colors.indigo.shade500,
   ];
 
   List buttonColors = [
-    MyThemes.primaryLight,
+    MyThemes.primaryColor,
     const Color(0xffffaf4e),
     const Color(0xff1eb090),
     const Color(0xffffbe97),

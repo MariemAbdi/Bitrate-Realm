@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MultilineField extends StatefulWidget {
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class _MultilineFieldState extends State<MultilineField> {
       controller: widget.controller,
       keyboardType: TextInputType.multiline,
       maxLines: null,
+      style: context.textTheme.headlineSmall,
       decoration: InputDecoration(
           labelText: widget.label,
           hintText: widget.hint,

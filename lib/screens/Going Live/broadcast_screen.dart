@@ -21,7 +21,6 @@ import 'package:provider/provider.dart';
 
 
 import '../../models/live_stream.dart';
-import '../../providers/auth_provider.dart';
 import '../../services/firebase_auth_services.dart';
 import '../../config/app_style.dart';
 import '../../services/livestream_services.dart';
@@ -142,7 +141,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
     final res = await http.get(
       Uri.parse('${dotenv.env["RENDER_BASEURL"]}/rtc/${widget.channelId}/publisher/userAccount/${
           // context.read<FirebaseAuthServices>().user.uid
-          Provider.of<AuthProvider>(context).user!.uid
+          FirebaseAuthServices().user!.uid
       }/'),
     );
 
@@ -198,8 +197,9 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
       }
       //if(!mounted)return;
       await _engine.joinChannelWithUserAccount(token, widget.channelId,
-         // context.read<FirebaseAuthServices>().user.uid
-          Provider.of<AuthProvider>(context).user!.uid
+         FirebaseAuthServices().user!.uid
+         //context.read<FirebaseAuthServices>().user!.uid
+
       );
     }
   }
@@ -242,10 +242,10 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
   Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (p) async {
-        customConfirmationCoolAlert(context, LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json", ()async {await _leaveChannel(
-           // context.read<FirebaseAuthServices>().user.uid
-            Provider.of<AuthProvider>(context).user!.uid
-        );});
+        // customConfirmationCoolAlert( LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json", ()async {await _leaveChannel(
+        //    // context.read<FirebaseAuthServices>().user.uid
+        //     Provider.of<AuthProvider>(context).user!.uid
+        // );});
         return Future.value(true);
       },
       child: Scaffold(
@@ -259,13 +259,13 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 15),
               child: CustomButton(text: LocaleKeys.leave.tr(), onPressed: (){
-                customConfirmationCoolAlert(context, LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json",
-                  ()async {
-                  await _leaveChannel(
-                      Provider.of<AuthProvider>(context).user!.uid
-                     // context.read<FirebaseAuthServices>().user.uid
-                  );
-                });
+                // customConfirmationCoolAlert(LocaleKeys.leave.tr(), LocaleKeys.areYouSureYouWantToLeave.tr(), "assets/lottie/sad-dog.json",
+                //   ()async {
+                //   await _leaveChannel(
+                //       Provider.of<AuthProvider>(context).user!.uid
+                //      // context.read<FirebaseAuthServices>().user.uid
+                //   );
+                // });
               },),
             ),
           ),
@@ -341,7 +341,7 @@ class _BroadcastScreenState extends State<BroadcastScreen> with WidgetsBindingOb
                                                 margin: const EdgeInsets.all(3.0),
                                                 padding: const EdgeInsets.all(8.0),
                                                 decoration: const BoxDecoration(
-                                                  color: MyThemes.primaryLight,
+                                                  //color: MyThemes.primaryLight,
                                                   shape: BoxShape.circle,),
                                                 child: IconButton(
                                                   padding: EdgeInsets.zero,

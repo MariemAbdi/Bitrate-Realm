@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../screens/Discover/upload_video.dart';
 import '../config/app_style.dart';
-import '../widgets/my_appbar.dart';
 import '../models/live_stream.dart';
 import '../services/livestream_services.dart';
 import '../widgets/live_video_widget.dart';
@@ -40,7 +39,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: _currentIndex==index?MyThemes.primaryLight:MyThemes.primaryLight.withOpacity(0.2),
+          //color: _currentIndex==index?MyThemes.primaryLight:MyThemes.primaryLight.withOpacity(0.2),
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
@@ -61,36 +60,38 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     final bool isLight= Theme.of(context).brightness==MyThemes.customTheme.brightness;
 
     return Scaffold(
-      appBar: MyAppBar(
-        implyLeading:false,
-        title: LocaleKeys.discover.tr(),
-        action: Container(
-            margin: const EdgeInsets.only(top: 7, bottom: 7, right: 10, left: 10),
-            padding: const EdgeInsets.only(left: 10,right: 10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.3),
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3), // changes position of shadow
-                ),
-              ],
-            ),
-            child: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const UploadVideoScreen()));
-              },
-              child:  Row(
-                children: [
-                  Text(LocaleKeys.upload.tr(), style: GoogleFonts.ptSans(color: Colors.red, fontWeight: FontWeight.bold)),
-                  const Icon(Icons.video_call_sharp, color: Colors.red,size: 18,)
+      appBar: AppBar(
+        automaticallyImplyLeading:false,
+        title: Text(LocaleKeys.discover.tr()),
+        actions: [
+          Container(
+              margin: const EdgeInsets.only(top: 7, bottom: 7, right: 10, left: 10),
+              padding: const EdgeInsets.only(left: 10,right: 10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white.withOpacity(0.3),
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
                 ],
               ),
-            )
-        ),),
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const UploadVideoScreen()));
+                },
+                child:  Row(
+                  children: [
+                    Text(LocaleKeys.upload.tr(), style: GoogleFonts.ptSans(color: Colors.red, fontWeight: FontWeight.bold)),
+                    const Icon(Icons.video_call_sharp, color: Colors.red,size: 18,)
+                  ],
+                ),
+              )
+          )
+        ],),
       body: ConstrainedBox(
         constraints: const BoxConstraints(
           maxWidth: 600,
@@ -141,7 +142,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                                   return Center(
                                     child: Text(
                                       LocaleKeys.nothingToShow.tr(),
-                                      style: GoogleFonts.ptSans(color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
+                                      style: GoogleFonts.ptSans(
+                                          //color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700), textAlign: TextAlign.center,),
                                   );
@@ -184,7 +186,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                                 return Center(
                                   child: Text(
                                     LocaleKeys.nothingToShow.tr(),
-                                    style: GoogleFonts.ptSans(color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
+                                    style: GoogleFonts.ptSans(
+                                        //color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w700), textAlign: TextAlign.center,),
                                 );
@@ -194,7 +197,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                                   return Center(
                                     child: Text(
                                       LocaleKeys.nothingToShow.tr(),
-                                      style: GoogleFonts.ptSans(color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
+                                      style: GoogleFonts.ptSans(
+                                          //color: isLight ? MyThemes.primaryLight:Colors.white.withOpacity(0.8),
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700), textAlign: TextAlign.center,),
                                   );
@@ -213,7 +217,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
 
                               return const Center(
                                   child: CircularProgressIndicator(
-                                    color: MyThemes.primaryLight,
+                                    //color: MyThemes.primaryLight,
                                   ));
                             }
                         ),

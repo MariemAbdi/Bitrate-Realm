@@ -1,8 +1,9 @@
+import 'package:bitrate_realm/widgets/utils/square_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/routing.dart';
-import 'package:bitrate_realm/widgets/custom_outlined_button.dart';
 
 import '../../providers/user_provider.dart';
+import '../utils/custom_outlined_button.dart';
 import '../utils/loading_wrapper.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget{
@@ -24,20 +25,9 @@ class HomeAppBarState extends State<HomeAppBar> {
       leading: InkWell(
         onTap: profileNavigation,
         child: Container(
-          padding: const EdgeInsets.fromLTRB(8,8,0,8),
-          margin: const EdgeInsets.only(left: 10),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: Image.network(
-                  userProvider.user!.pictureURL!,
-                height: 40,
-                width: 40,
-                fit: BoxFit.cover, // Ensures the image covers the area without exceeding
-              ),
-            )
-          ),
+            padding: const EdgeInsets.fromLTRB(8,8,0,8),
+            margin: const EdgeInsets.only(left: 10),
+            child: SquareImage(photoLink: userProvider.user?.pictureURL)
         ),
       ),
       title: Row(
@@ -45,7 +35,7 @@ class HomeAppBarState extends State<HomeAppBar> {
         children: [
           Expanded(
             child: Text(
-              userProvider.user!.username,
+              userProvider.user?.username ?? "",
             ),
           ),
         ],
@@ -54,12 +44,15 @@ class HomeAppBarState extends State<HomeAppBar> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 8),
           child: CustomOutlinedButton(
-              child: Icon(Icons.search)
+              aspectRatio: 1,
+              onPressed: searchNavigation,
+              child: Icon(Icons.search),
           ),
         ),
         Padding(
           padding: EdgeInsets.all(8),
           child: CustomOutlinedButton(
+              aspectRatio: 1,
               child: Icon(Icons.notifications)
           ),
         ),

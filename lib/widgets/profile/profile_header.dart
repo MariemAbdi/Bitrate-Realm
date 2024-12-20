@@ -1,13 +1,13 @@
 import 'package:bitrate_realm/config/responsiveness.dart';
 import 'package:bitrate_realm/constants/spacing.dart';
 import 'package:bitrate_realm/widgets/utils/custom_button.dart';
+import 'package:bitrate_realm/widgets/utils/leading_app_bar_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import '../../config/routing.dart';
 import '../../providers/user_provider.dart';
-import '../custom_outlined_button.dart';
+import '../utils/custom_outlined_button.dart';
 import '../utils/loading_wrapper.dart';
 import '../utils/user_info_tile.dart';
 
@@ -18,14 +18,12 @@ const ProfileHeader({Key? key}) : super(key: key);
 Widget build(BuildContext context) {
   return SliverAppBar(
     automaticallyImplyLeading: false,
-    leading: IconButton(
-        onPressed: () => Get.back(),
-        icon: const Icon(Icons.arrow_back_ios_new)
-    ),
+    leading: const LeadingAppBarIcon(),
     actions: const [
       Padding(
         padding: EdgeInsets.all(8),
         child: CustomOutlinedButton(
+            aspectRatio: 1,
             onPressed: settingsNavigation,
             child: Icon(Icons.more_vert)
         ),
@@ -56,13 +54,12 @@ Widget build(BuildContext context) {
                   children: [
                     const UserInfoTile(isSmall: false),
                     kVerticalSpace,
-                    Text(userProvider.user!.bio, style: const TextStyle(color: Colors.white)),
+                    Text(userProvider.user!.bio, style: Get.textTheme.bodySmall),
                     kVerticalSpace,
                     Row(
                       children: [
                         Expanded(
                           child: CustomButton(
-                              isUppercase: false,
                               text: "Follow",
                               iconData: Icons.person_add_alt_rounded,
                               onPressed: (){}
@@ -72,7 +69,6 @@ Widget build(BuildContext context) {
                         Expanded(
                           child: CustomButton(
                               text: "Message",
-                              isUppercase: false,
                               iconData: Icons.chat,
                               onPressed: (){}
                           ),

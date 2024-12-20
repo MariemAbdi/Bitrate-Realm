@@ -1,15 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/validators.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../translations/locale_keys.g.dart';
 
 class PasswordField extends StatefulWidget {
   final TextEditingController passwordController;
-  final bool requireValidation;
-  const PasswordField({Key? key, required this.passwordController, required this.requireValidation}) : super(key: key);
+  const PasswordField({Key? key, required this.passwordController, this.canBeEmpty = false, this.title}) : super(key: key);
 
+  final bool canBeEmpty;
+  final String? title;
   @override
   State<PasswordField> createState() => _PasswordFieldState();
 }
@@ -20,7 +21,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: (password) => Validators().passwordValidation(password, widget.requireValidation),
+      validator: widget.canBeEmpty ? null : Validators().passwordValidation,
       keyboardType: TextInputType.text,
       controller: widget.passwordController,
       obscureText: !_isPasswordVisible,
@@ -28,9 +29,10 @@ class _PasswordFieldState extends State<PasswordField> {
       autofillHints: const[
         AutofillHints.password
       ],
+      style: context.textTheme.headlineSmall,
       decoration: InputDecoration(
-          labelText: LocaleKeys.password.tr(),
-          hintText: LocaleKeys.enteryourpassword.tr(),
+          labelText: widget.title ?? LocaleKeys.password.tr(),
+          hintText: widget.title ?? LocaleKeys.enteryourpassword.tr(),
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: IconButton(
             icon: Icon(_isPasswordVisible

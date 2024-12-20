@@ -3,10 +3,9 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/validators.dart';
+import 'package:get/get.dart' hide Trans;
 
 import '../../translations/locale_keys.g.dart';
-
-
 class EmailField extends StatefulWidget {
   final TextEditingController emailController;
   const EmailField({Key? key, required this.emailController}) : super(key: key);
@@ -25,6 +24,7 @@ class _EmailFieldState extends State<EmailField> {
       autofillHints: const [
         AutofillHints.email
       ],
+      style: context.textTheme.headlineSmall,
       decoration: InputDecoration(
           labelText: LocaleKeys.email.tr(),
           hintText: LocaleKeys.enteryouremail.tr(),

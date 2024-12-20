@@ -18,28 +18,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
         extendBodyBehindAppBar: true,
         body: CustomScrollView(
           slivers: [
-            // Add your sliver app bar or header
-            // SliverToBoxAdapter(
-            //   child: ProfileHeader(), // Replace with your profile header widget
-            // ),
-
-            ProfileHeader(),
+            const ProfileHeader(),
 
             // CategoriesList wrapped in SliverToBoxAdapter
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: CategoriesList(),
             ),
 
             // Vertical space
-            SliverToBoxAdapter(
-              child: kVerticalSpace, // Replace with your spacing widget or constant
+            const SliverToBoxAdapter(
+              child: kVerticalSpace,
             ),
 
             // LiveList wrapped in SliverList or SliverToBoxAdapter
             SliverList(
               delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                  return LiveList(); // Replace with your dynamic list widget
+                  return const LiveList(); // Replace with your dynamic list widget
                 },
                 childCount: 1, // Update child count as needed
               ),

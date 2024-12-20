@@ -97,13 +97,14 @@ class _SignupFormState extends State<SignupForm> {
           EmailField(emailController: _emailController),
           kVerticalSpace,
 
-          PasswordField(passwordController: _passwordController, requireValidation: true),
+          PasswordField(passwordController: _passwordController),
           kVerticalSpace,
 
           //VALIDATION BUTTON
           CustomButton(
-              text: LocaleKeys.signup.tr(),
-              onPressed: signup
+            text: LocaleKeys.signup.tr(),
+            onPressed: signup,
+            isUppercase: true,
           ),
 
           //-------------------------------GOOGLE AUTHENTICATION--------------------------------------------

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../custom_outlined_button.dart';
 import '../utils/custom_list.dart';
+import '../utils/custom_outlined_button.dart';
 
 
 class CategoriesList extends StatelessWidget {
@@ -16,7 +16,6 @@ class CategoriesList extends StatelessWidget {
           return const Padding(
             padding: EdgeInsets.only(right: 8),
             child: CustomOutlinedButton(
-                aspectRatio: 2,
                 child: Text("Category")
             ),
           );
