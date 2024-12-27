@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:bitrate_realm/providers/navigation_provider.dart';
 import 'package:bitrate_realm/providers/user_provider.dart';
+import 'package:bitrate_realm/screens/authentication/login.dart';
 import 'package:bitrate_realm/screens/on_boarding.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,11 +10,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:bitrate_realm/screens/login.dart';
 import 'package:bitrate_realm/screens/navigation.dart';
 import 'package:bitrate_realm/translations/codegen_loader.g.dart';
 import 'package:provider/provider.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'config/app_style.dart';
 import 'firebase_options.dart';
@@ -42,6 +44,12 @@ Future<void> main() async {
   //INITIALIZING THE INTERNATIONALIZATION PACKAGE
   await EasyLocalization.ensureInitialized();
 
+  // Add localization for supported languages
+  timeago.setLocaleMessages('en', timeago.EnMessages());
+  timeago.setLocaleMessages('fr', timeago.FrMessages());
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
+  // Add other languages as needed
+
   //RUNNING THE APP WITH INTERNATIONALIZATION SETTINGS
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en'), Locale('fr')],
@@ -59,6 +67,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => NavigationProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
       ],
       child: GetMaterialApp(

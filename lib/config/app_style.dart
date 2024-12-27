@@ -35,9 +35,10 @@ class MyThemes{
           scrolledUnderElevation: 1,
           centerTitle: true,
           titleTextStyle: GoogleFonts.poppins(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
               color: white,
+              height: 1.1,
               textStyle: const TextStyle(overflow: TextOverflow.ellipsis)
       )
     ),
@@ -67,9 +68,43 @@ class MyThemes{
         titleTextStyle: GoogleFonts.poppins(textStyle: const TextStyle(color: white, fontWeight: FontWeight.w600, fontSize: 16)),
     ),
 
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: GoogleFonts.poppins(color: Colors.grey),
+
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          floatingLabelStyle: GoogleFonts.poppins(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
+          labelStyle: GoogleFonts.poppins(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 16),
+
+          errorStyle: GoogleFonts.poppins(color: Colors.redAccent, fontWeight: FontWeight.w500),
+
+          prefixStyle: GoogleFonts.poppins(color: white),
+          suffixStyle: GoogleFonts.poppins(color: white),
+
+          prefixIconColor: primaryColor,
+          suffixIconColor: primaryColor,
+
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: primaryColor, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+
+        textStyle: GoogleFonts.poppins(
+            color: Colors.white,
+            fontSize: 14
+        ),
+      ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(white), // Always white text
+            foregroundColor: MaterialStateProperty.all<Color>(white),
+            shadowColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+              if (states.contains(MaterialState.hovered)) {
+                return Colors.grey.shade700; // When hovered
+              }
+              return Colors.transparent; // By default
+            }),
             textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
               const EdgeInsets.all(20),
@@ -123,25 +158,21 @@ class MyThemes{
     ),
 
       navigationBarTheme: NavigationBarThemeData(
-      elevation: 5,
-      height: 70,
-      backgroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
-      indicatorColor: primaryColor, //the background behind selected one
-      overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
-      labelTextStyle: MaterialStateProperty.all(
-          GoogleFonts.poppins(textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600,color: primaryColor))
-      ),
-      iconTheme: MaterialStateProperty.resolveWith<IconThemeData?>((Set<MaterialState> states) {
-        if (states.contains(MaterialState.disabled)) {
-          return const IconThemeData(color: Colors.grey, size: 25); // Disabled state
-        }
-        if (states.contains(MaterialState.selected)) {
-          return const IconThemeData(color: white, size: 20); // Pressed state
-        }
-        return const IconThemeData(color: primaryColor, size: 25); // Default state
-      }),
-      labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        elevation: 5,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        indicatorColor: primaryColor, //the background behind selected one
+        overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+        iconTheme: MaterialStateProperty.resolveWith<IconThemeData?>((Set<MaterialState> states) {
+          if (states.contains(MaterialState.disabled)) {
+            return const IconThemeData(color: Colors.grey, size: 25); // Disabled state
+          }
+          if (states.contains(MaterialState.selected)) {
+            return const IconThemeData(color: white, size: 20); // Pressed state
+          }
+          return const IconThemeData(color: primaryColor, size: 25); // Default state
+        }),
     ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
@@ -154,11 +185,9 @@ class MyThemes{
             side: MaterialStateProperty.resolveWith<BorderSide>(
                   (states) {
                 if (states.contains(MaterialState.pressed) ||
-                    states.contains(MaterialState.hovered)) {
+                    states.contains(MaterialState.hovered) ||
+                    states.contains(MaterialState.focused)) {
                   return const BorderSide(color: Colors.white, width: 0.75);
-                }
-                if(states.contains(MaterialState.focused)){
-                  return const BorderSide(color: Colors.red, width: 0.75);
                 }
                 return const BorderSide(color: Colors.white, width: 0.75);
               },
@@ -174,7 +203,7 @@ class MyThemes{
           )),
 
       progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: white
+        color: white,
     ),
 
       tabBarTheme: TabBarTheme(
@@ -215,14 +244,30 @@ class MyThemes{
       ),
 
       titleLarge: GoogleFonts.poppins(),
-      titleMedium: GoogleFonts.poppins(),
-      titleSmall: GoogleFonts.poppins(),
+      titleMedium: GoogleFonts.poppins(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: white,
+          textStyle: const TextStyle(overflow: TextOverflow.ellipsis)
+      ),
+      titleSmall: GoogleFonts.poppins(
+        fontSize: 16,
+        color: white
+      ),
 
       labelLarge: GoogleFonts.poppins(),
       labelMedium: GoogleFonts.poppins(),
-      labelSmall: GoogleFonts.poppins(),
+      labelSmall: GoogleFonts.poppins(
+        color: white,
+        fontSize: 14,
+          fontWeight: FontWeight.w600
+      ),
 
-      bodyLarge: GoogleFonts.poppins(),
+      bodyLarge: GoogleFonts.poppins(
+        color: white,
+        fontWeight: FontWeight.bold,
+        fontSize: 24
+      ),
       bodyMedium: GoogleFonts.poppins(
         color: white,
         fontWeight: FontWeight.w600,

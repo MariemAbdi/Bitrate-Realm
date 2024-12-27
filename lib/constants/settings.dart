@@ -30,6 +30,7 @@ List<AppSetting> settingsList=[
       title: "Privacy",
       subtitle: "View our privacy policy",
       iconData: CupertinoIcons.phone_circle_fill,
+      navigation: privacyPolicyNavigation
   ),
   AppSetting(
       title: LocaleKeys.rateUs.tr(),

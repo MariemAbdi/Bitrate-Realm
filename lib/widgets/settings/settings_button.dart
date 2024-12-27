@@ -9,21 +9,19 @@ class SettingsButton extends StatelessWidget {
   final AppSetting appSetting;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: CustomOutlinedButton(
-          onPressed: appSetting.onTap ?? appSetting.navigation,
-          child: ListTile(
-              leading: Icon(appSetting.iconData, color: Colors.white),
-              title: Text(appSetting.title,
-                  style: context.textTheme.bodyMedium),
-              subtitle: Text(appSetting.subtitle,
-                  style: context.textTheme.bodySmall),
-              trailing: Visibility(
-                visible: appSetting.navigation != null,
-                child: const Icon(Icons.arrow_forward_ios,
-                    size: 18, color: Colors.white70),
-              ))),
-    );
+    return CustomOutlinedButton(
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        onPressed: appSetting.onTap ?? appSetting.navigation,
+        child: ListTile(
+            leading: Icon(appSetting.iconData, color: Colors.white),
+            title: Text(appSetting.title,
+                style: context.textTheme.bodyMedium),
+            subtitle: Text(appSetting.subtitle,
+                style: context.textTheme.bodySmall),
+            trailing: Visibility(
+              visible: appSetting.navigation != null,
+              child: const Icon(Icons.arrow_forward_ios,
+                  size: 18, color: Colors.white70),
+            )));
   }
 }

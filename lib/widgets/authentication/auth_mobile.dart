@@ -1,4 +1,5 @@
-import 'dart:ui';
+// Import the new library for web-specific APIs
+import 'dart:ui' as ui;
 
 import 'package:bitrate_realm/config/app_style.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,14 @@ return Stack(
     ),
     Positioned.fill(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
         child: const SizedBox(),
       ),
     ),
     const RiveAnimation.asset("assets/rive/shapes.riv",),
     Positioned.fill(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+        filter: ui.ImageFilter.blur(sigmaX: 30, sigmaY: 30),
         child: const SizedBox(),
       ),
     ),

@@ -1,7 +1,6 @@
 import 'package:bitrate_realm/services/livestream_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -55,7 +54,7 @@ class _ChatState extends State<Chat> {
                     suffixIcon: _chatController.text.isEmpty
                         ? null
                         : IconButton(
-                      icon: const Icon(EvaIcons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         setState(() {
                           _chatController.clear();

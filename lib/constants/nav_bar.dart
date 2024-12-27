@@ -1,35 +1,30 @@
-import 'package:bitrate_realm/screens/chat_screen.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:bitrate_realm/screens/chat/chat.dart';
+import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:bitrate_realm/config/app_style.dart';
-import 'package:bitrate_realm/screens/Going%20Live/go_live_screen.dart';
+import 'package:bitrate_realm/screens/live/go_live_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../screens/discover_screen.dart';
+import '../screens/discover.dart';
 import '../screens/home.dart';
-import '../translations/locale_keys.g.dart';
 
 final navigationScreens=[
   const HomeScreen(),
   const DiscoverScreen(),
-  const ChatScreen(receiver: "maryouma7264@hotmail.fr"),
+  const ChatScreen(),
   const GoLiveScreen(),
 ];
 
-List<Widget> navigationDestinations =[
-  const NavigationDestination(
-      icon: Icon(Icons.home),
-      label: "Home"
+List<CrystalNavigationBarItem> navigationDestinations =[
+  CrystalNavigationBarItem(
+      icon: Icons.home
   ),
-  NavigationDestination(
-    icon: const Icon(Icons.featured_play_list_rounded),
-    label: LocaleKeys.discover.tr(),
+  CrystalNavigationBarItem(
+    icon: Icons.search
   ),
-  const NavigationDestination(
-      icon: Icon(Icons.chat),
-      label: "Chat"
+  CrystalNavigationBarItem(
+      icon: Icons.chat
   ),
-  const NavigationDestination(
-      icon: Icon(Icons.broadcast_on_personal_rounded),
-      label: "Live"
+  CrystalNavigationBarItem(
+      icon: FontAwesomeIcons.headset
   ),
 ];

@@ -52,10 +52,9 @@ class _SignupFormState extends State<SignupForm> {
       UserModel userModel = UserModel(
         email: _emailController.text.trim(),
         username: _nicknameController.text.trim(),
-        password: _passwordController.text.trim(),
       );
 
-      await context.read<FirebaseAuthServices>().signUpWithEmailAndPassword(userModel: userModel);
+      await context.read<FirebaseAuthServices>().signUpWithEmailAndPassword(userModel: userModel, password: _passwordController.text.trim());
       clearFields();
     }
   }

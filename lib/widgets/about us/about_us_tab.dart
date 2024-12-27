@@ -15,14 +15,12 @@ class AboutUsTab extends StatelessWidget {
         height: 50,
         itemCount: aboutUsList.length,
         itemBuilder: (context, index){
-          return Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: CustomOutlinedButton(
-                isSelected: index == currentIndex,
-                //aspectRatio: 4,
-                onPressed: ()=>onPressed(index),
-                child: Text(aboutUsList[index].tabTitle)
-            ),
+          return CustomOutlinedButton(
+              margin: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.all(10),
+              isSelected: index == currentIndex,
+              onPressed: ()=>onPressed(index),
+              child: Text(aboutUsList[index].tabTitle)
           );
         }
     );

@@ -1,11 +1,11 @@
-import 'dart:ui';
+// Import the new library for web-specific APIs
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bitrate_realm/constants/spacing.dart';
 import 'package:rive/rive.dart';
 
-import '../../config/app_style.dart';
 import '../../config/assets_paths.dart';
 import '../../config/responsiveness.dart';
 import '../utils/custom_button.dart';
@@ -32,7 +32,7 @@ class AuthDesktop extends StatelessWidget {
                 ),
                 Positioned.fill(
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    filter: ui.ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                     child: const SizedBox(),
                   ),
                 ),
@@ -41,7 +41,7 @@ class AuthDesktop extends StatelessWidget {
                 ),
                 Positioned.fill(
                   child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+                    filter: ui.ImageFilter.blur(sigmaX: 30, sigmaY: 30),
                     child: const SizedBox(),
                   ),
                 ),

@@ -34,10 +34,10 @@ class _VideoWidgetState extends State<VideoWidget> {
 
               Ink.image(image: NetworkImage(snapshot.data!), height: 150, fit: BoxFit.cover,),
 
-              Positioned(
-                  top: 5,
-                  left: 10,
-                  child: Text(widget.video.language, style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600)))),
+              // Positioned(
+              //     top: 5,
+              //     left: 10,
+              //     child: Text(widget.video.language, style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600)))),
 
               Positioned(
                   bottom: 3,
@@ -55,7 +55,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   //GETTING THE USER'S PROFILE PICTURE
   Widget profilePicture(){
     return FutureBuilder(
-      future: storage.downloadURL("profile pictures", widget.video.user),
+      future: storage.downloadURL("profile pictures", widget.video.streamer??""),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if(snapshot.hasData){
           return Container(
@@ -77,7 +77,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   }
 
   getUser(){
-    FirebaseFirestore.instance.collection("users").doc(widget.video.user).get().then((DocumentSnapshot documentSnapshot){
+    FirebaseFirestore.instance.collection("users").doc(widget.video.streamer).get().then((DocumentSnapshot documentSnapshot){
       setState(() {
         nickname=documentSnapshot["nickname"];
       });
@@ -109,7 +109,7 @@ class _VideoWidgetState extends State<VideoWidget> {
         child: Column(
           children: [
 
-            thumbnail(widget.video.thumbnailLink),
+            thumbnail(widget.video.thumbnailLink??""),
 
             Padding(
               padding: const EdgeInsets.only(top: 5, right: 15, left: 15, bottom: 5),

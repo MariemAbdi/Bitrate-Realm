@@ -81,6 +81,30 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  /// Update the user's cover image in Firestore and Firebase Storage
+  Future<void> updateCoverImage(Uint8List pickedImage, String userId) async {
+    try {
+      // Upload the image to Firebase Storage
+      String? photoURL = await FirebaseStorageServices().uploadFile(
+        "cover pictures",
+        pickedImage,
+        userId,
+      );
+
+      // Update Firestore with the new image URL
+      if(photoURL!=null){
+        await _firestore.collection("users").doc(userId).update({
+          "coverURL": photoURL,
+        });
+      }
+
+      // Since Firestore already reflects the updated data, there's no need for an additional fetch.
+      notifyListeners();  // Ensure the UI is updated
+    } catch (error) {
+      throw Exception("Error updating cover image: $error");
+    }
+  }
+
   /// Remove the user's profile image from Firestore and Firebase Storage
   Future<void> removeProfileImage(String userId) async {
     try {
@@ -96,6 +120,24 @@ class UserProvider extends ChangeNotifier {
       notifyListeners();
     } catch (error) {
       throw Exception("Error removing profile image: $error");
+    }
+  }
+
+  /// Remove the user's profile image from Firestore and Firebase Storage
+  Future<void> removeCoverImage(String userId) async {
+    try {
+      // Remove the image from Firebase Storage
+      FirebaseStorageServices().deleteFile("cover pictures", userId);
+
+      // Update Firestore to remove the image URL
+      await _firestore.collection("users").doc(userId).update({
+        "coverURL": FieldValue.delete(),
+      });
+
+      // Firestore is updated, so notify listeners to reflect changes in the UI
+      notifyListeners();
+    } catch (error) {
+      throw Exception("Error removing cover image: $error");
     }
   }
 

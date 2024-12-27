@@ -1,3 +1,4 @@
+import 'package:bitrate_realm/config/assets_paths.dart';
 import 'package:bitrate_realm/config/utils.dart';
 import 'package:bitrate_realm/constants/spacing.dart';
 import 'package:bitrate_realm/widgets/utils/custom_button.dart';
@@ -8,8 +9,13 @@ import '../utils/custom_outlined_button.dart';
 import '../utils/square_image.dart';
 
 class EditProfileImage extends StatelessWidget {
-  const EditProfileImage({Key? key, required this.profileImageLink, required this.updateImage,required this.removeImage}) : super(key: key);
+  const EditProfileImage({Key? key,
+    this.isProfile = true,
+    required this.profileImageLink,
+    required this.updateImage,
+    required this.removeImage}) : super(key: key);
 
+  final bool isProfile;
   final String? profileImageLink;
   final void Function()? updateImage, removeImage;
 
@@ -35,37 +41,44 @@ class EditProfileImage extends StatelessWidget {
       );
     }
 
-    return Stack(
-      clipBehavior: Clip.none,
+    return Column(
       children: [
-        Center(
-          child: SizedBox(
-              height: 100,
-              child: CustomOutlinedButton(
-                aspectRatio: 1,
-                child: SquareImage(
-                    padding: const EdgeInsets.all(8),
-                    photoLink: profileImageLink
-                ),
-              )
-          ),
-        ),
-
-        Center(
-          child: InkWell(
-            onTap: showOptions,
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: const Center(
-                child: Icon(Icons.add_photo_alternate, color: Colors.white),
+        Text(isProfile ? "Profile Picture" : "Cover Picture", style: context.textTheme.bodySmall?.copyWith(fontSize: 12)),
+        kSmallVerticalSpace,
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Center(
+              child: SizedBox(
+                  height: 100,
+                  child: CustomOutlinedButton(
+                    aspectRatio: 1,
+                    child: SquareImage(
+                      padding: const EdgeInsets.all(8),
+                      photoLink: profileImageLink,
+                      placeholderLink: !isProfile ? AssetsPaths.coverPlaceholder : null,
+                    ),
+                  )
               ),
             ),
-          ),
+
+            Center(
+              child: InkWell(
+                onTap: showOptions,
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.add_photo_alternate, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

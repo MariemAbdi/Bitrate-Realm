@@ -1,4 +1,3 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,7 +33,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           suffixIcon: widget.controller.text.isEmpty
               ? null
               : IconButton(
-            icon: const Icon(EvaIcons.close),
+            icon: const Icon(Icons.close, size: 16),
             onPressed: () {
               setState(() {
                 widget.controller.clear();

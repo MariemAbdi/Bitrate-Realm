@@ -23,7 +23,7 @@ class HomeAppBarState extends State<HomeAppBar> {
         builder: (context, userProvider) => AppBar(
       automaticallyImplyLeading: false,
       leading: InkWell(
-        onTap: profileNavigation,
+        onTap: ()=>profileNavigation(userProvider.user!.email),
         child: Container(
             padding: const EdgeInsets.fromLTRB(8,8,0,8),
             margin: const EdgeInsets.only(left: 10),
@@ -35,26 +35,17 @@ class HomeAppBarState extends State<HomeAppBar> {
         children: [
           Expanded(
             child: Text(
-              userProvider.user?.username ?? "",
+              "Hello,\n${userProvider.user?.username ?? ""}",
             ),
           ),
         ],
       ),
       actions: const [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
-          child: CustomOutlinedButton(
-              aspectRatio: 1,
-              onPressed: searchNavigation,
-              child: Icon(Icons.search),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8),
-          child: CustomOutlinedButton(
-              aspectRatio: 1,
-              child: Icon(Icons.notifications)
-          ),
+        CustomOutlinedButton(
+            aspectRatio: 1,
+            margin: EdgeInsets.all(8),
+            onPressed: notificationsNavigation,
+            child: Icon(Icons.notifications)
         ),
       ],
     ));

@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
-  const CustomAppBar({Key? key, required this.title}) : super(key: key);
+  final bool canGoBack;
+  const CustomAppBar({Key? key, required this.title, this.canGoBack = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: const LeadingAppBarIcon(),
+      automaticallyImplyLeading: canGoBack,
+      leading: canGoBack ? const LeadingAppBarIcon() : null,
+      titleTextStyle: AppBarTheme.of(context).titleTextStyle?.copyWith(
+        fontSize: 16
+      ),
       title: Text(title),
     );
   }

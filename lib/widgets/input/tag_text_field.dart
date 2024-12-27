@@ -44,7 +44,7 @@ class _TagTextFieldState extends State<TagTextField> {
               suffixIcon: !widget.controller.hasTags
                   ? null
                   : IconButton(
-                icon: const Icon(Icons.close),
+                icon: const Icon(Icons.close, size: 14),
                 onPressed: () {
                   widget.controller.clearTags();
                   setState(() {});

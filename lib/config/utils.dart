@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:bitrate_realm/constants/about_us.dart';
 import 'package:bitrate_realm/models/alert_data.dart';
 import 'package:bitrate_realm/widgets/utils/custom_outlined_button.dart';
-import 'package:cool_alert/cool_alert.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -17,6 +16,7 @@ import 'package:get/get.dart' hide Trans;
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import '../services/firebase_auth_services.dart';
 import '../widgets/utils/custom_alert.dart';
@@ -24,14 +24,13 @@ import '../widgets/utils/custom_button.dart';
 import 'app_style.dart';
 import '../translations/locale_keys.g.dart';
 
-BuildContext _context = Get.context!;
+//BuildContext _context = Get.context!;
 
 enum ToastType { success, info, error }
 
 //PICK FILE FROM DEVICE
-Future<Uint8List?> pickFile(BuildContext context, FileType type) async {
-  FilePickerResult? pickedImage =
-      await FilePicker.platform.pickFiles(allowMultiple: false, type: type);
+Future<Uint8List?> pickFile(FileType type) async {
+  FilePickerResult? pickedImage = await FilePicker.platform.pickFiles(allowMultiple: false, type: type);
   try {
     if (pickedImage != null) {
       if (kIsWeb) {
@@ -41,12 +40,11 @@ Future<Uint8List?> pickFile(BuildContext context, FileType type) async {
       //FOR MOBILE
       return await File(pickedImage.files.single.path!).readAsBytes();
     } else {
-      mySnackBar(LocaleKeys.noFileSelected.tr(), Colors.red);
+      showToast(toastType: ToastType.error, message: LocaleKeys.noFileSelected.tr());
     }
-  } catch (e) {
-    mySnackBar(e.toString(), Colors.red);
+  } catch (error) {
+    showToast(toastType: ToastType.error, message: error.toString());
   }
-
   return null;
 }
 
@@ -59,21 +57,9 @@ String tagsList(List<String> tagList) {
   return result;
 }
 
-//SIMPLE BOTTOM SNACK BAR
-Future<void> mySnackBar(String message, Color color) {
-  return ScaffoldMessenger.of(_context)
-      .showSnackBar(SnackBar(
-        content: Text(message),
-        backgroundColor: color,
-      ))
-      .closed
-      .then((value) => ScaffoldMessenger.of(_context).clearSnackBars());
-}
-
-//COPY TO CLIPBOARD
 Future<void> copyToClipboard(String textToCopy) async {
   await Clipboard.setData(ClipboardData(text: textToCopy)).whenComplete(()
-  => mySnackBar(LocaleKeys.copiedToClipboard.tr(), Colors.grey.shade700));
+  => showToast(toastType: ToastType.info, message: LocaleKeys.copiedToClipboard.tr()));
 }
 
 void showToast({required ToastType toastType, required String message}) {
@@ -91,7 +77,7 @@ void showToast({required ToastType toastType, required String message}) {
       break;
     default:
       title = "Notice";
-      backgroundColor = Colors.grey;
+      backgroundColor = MyThemes.primaryColor;
   }
 
   Get.snackbar(title, message,
@@ -108,7 +94,7 @@ void showLoadingPopUp() {
       const PopScope(
           canPop: false,
           child: Center(
-              child: CircularProgressIndicator(color: Colors.white))));
+              child: CircularProgressIndicator())));
 }
 
 void customBottomSheet(Widget child, {Color? backgroundColor}){
@@ -127,7 +113,7 @@ void customBottomSheet(Widget child, {Color? backgroundColor}){
 void customPopUp({required Widget child, required String title}){
   Get.dialog(
       BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10, tileMode: TileMode.mirror),
+        filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10, tileMode: TileMode.mirror),
         child: AlertDialog(
           insetPadding: const EdgeInsets.all(10),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -148,29 +134,50 @@ void customPopUp({required Widget child, required String title}){
   );
 }
 
-Future customInformativeCoolAlert(BuildContext context, String title, String text, String lottieAsset) {
-  return CoolAlert.show(
-    context: context,
-    type: CoolAlertType.success,
-    title: title,
-    text: text,
-    loopAnimation: true,
-    lottieAsset: lottieAsset,
-    backgroundColor: Theme.of(context).primaryColorDark,
-    confirmBtnColor: Theme.of(context).primaryColorDark,
-    confirmBtnText: LocaleKeys.done.tr(),
-    onConfirmBtnTap: () {
-      Navigator.pop(context);
-    },
-  );
-}
-
 String formatDuration(int time) {
   Duration duration = Duration(seconds: time);
   String hours = duration.inHours.toString().padLeft(2, '0');
   String minutes = (duration.inMinutes % 60).toString().padLeft(2, '0');
   String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
   return '$hours:$minutes:$seconds';
+}
+
+String formatDateTime(DateTime dateTime, {String locale = 'en'}) {
+  final now = DateTime.now();
+  final difference = now.difference(dateTime);
+
+  if (difference.inDays >= 365) {
+    // If more than a year ago, return date in "dd/MM/yyyy" format
+    return DateFormat('dd/MM/yyyy').format(dateTime);
+  } else if (difference.inDays >= 7) {
+    // If more than a week ago but less than a year, return "1 week ago", etc.
+    return timeago.format(dateTime, locale: locale);
+  } else if (difference.inDays >= 2) {
+    // If more than 1 day but less than a week
+    return '${difference.inDays} days ago';
+  } else if (difference.inDays == 1) {
+    // If yesterday
+    return 'Yesterday';
+  } else {
+    // Less than a day
+    return timeago.format(dateTime, locale: locale);
+  }
+}
+
+String formatFollowersNumber(int number) {
+  if (number < 1000) {
+    return number.toString(); // Return the number as it is if less than 1000
+  } else if (number < 1000000) {
+    double inThousands = number / 1000;
+    // Format as K with up to two decimal places
+    return '${inThousands.toStringAsFixed(2).replaceAll(RegExp(r'([.]*0+)(?!.*\d)'), '')}K'; // Remove trailing zeros
+  } else if (number < 999000000) {
+    double inMillions = number / 1000000;
+    // Format as M with up to two decimal places
+    return '${inMillions.toStringAsFixed(2).replaceAll(RegExp(r'([.]*0+)(?!.*\d)'), '')}M'; // Remove trailing zeros
+  } else {
+    return '+999M'; // Handle overflow
+  }
 }
 
 //SEND EMAIL WITH THE RATING
@@ -308,17 +315,15 @@ languageSelection(){
                     }
                 ),
               )
-              :Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: CustomOutlinedButton(
-                    child: Text(language.key),
-                    onPressed: ()async{
-                      GetStorage().write("language", language.key);
-                      await context.setLocale( Locale(language.value)); // change `easy_localization` locale
-                      await Get.updateLocale( Locale(language.value)); // change `Get` locale direction
-                      Get.back();
-                    }
-                ),
+              :CustomOutlinedButton(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Text(language.key),
+                  onPressed: ()async{
+                    GetStorage().write("language", language.key);
+                    await context.setLocale( Locale(language.value)); // change `easy_localization` locale
+                    await Get.updateLocale( Locale(language.value)); // change `Get` locale direction
+                    Get.back();
+                  }
               )).toList(),
             );
           })

@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bitrate_realm/config/validators.dart';
@@ -34,7 +33,7 @@ class _NicknameFieldState extends State<NicknameField> {
           suffixIcon: widget.nicknameController.text.isEmpty
               ? null
               : IconButton(
-            icon: const Icon(EvaIcons.close),
+            icon: const Icon(Icons.close, size: 14),
             onPressed: () {
               setState(() {
                 widget.nicknameController.clear();

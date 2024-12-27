@@ -17,9 +17,6 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
-            if (states.contains(MaterialState.hovered)) {
-              return backgroundColor.withOpacity(0.8); // When hovered
-            }
             return backgroundColor; // By default
           }),
         ),

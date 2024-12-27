@@ -31,7 +31,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     //final user = Provider.of<AuthProvider>(context).user;
     final user = FirebaseAuthServices().user!;
 
-    FirebaseFirestore.instance.collection("videos").doc(widget.video.id).get().then((DocumentSnapshot documentSnapshot) {
+    FirebaseFirestore.instance.collection("videos").doc(widget.video.channelId).get().then((DocumentSnapshot documentSnapshot) {
       setState(() {
         likesCount = documentSnapshot["likes"].length;
         isAlreadyLiked = documentSnapshot["likes"].contains(user.email);
@@ -41,7 +41,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   incrementView()async{
-    await FirebaseFirestore.instance.collection('videos').doc(widget.video.id).update({
+    await FirebaseFirestore.instance.collection('videos').doc(widget.video.channelId).update({
       'views': FieldValue.increment(1)
     });
   }
@@ -116,12 +116,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     ),
 
                     const Divider(),
-                    Row(
-                      children: [
-                        const Icon(Icons.language),
-                        Text(widget.video.language,style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16))),
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     const Icon(Icons.language),
+                    //     Text(widget.video.language,style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16))),
+                    //   ],
+                    // ),
                     Text(widget.video.description,style: GoogleFonts.ptSans(textStyle: const TextStyle(fontSize: 16)), textAlign: TextAlign.start,),
 
                     const Divider(),
@@ -154,7 +154,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               height: MediaQuery.of(context).size.height*0.45,
               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               child: Expanded(
-                  child: Chat(collectionName: 'videos', docId: widget.video.id,)
+                  child: Chat(collectionName: 'videos', docId: widget.video.channelId??"",)
               ),
             ),
 
@@ -192,7 +192,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       },
       onTap: (isLiked) async{
         //---------------IF ALREADY LIKED -> UNLIKE ELSE LIKE -------------
-        await FirebaseFirestore.instance.collection('videos').doc(widget.video.id).update({
+        await FirebaseFirestore.instance.collection('videos').doc(widget.video.channelId).update({
           "likes": isAlreadyLiked?FieldValue.arrayRemove([id]):FieldValue.arrayUnion([id]),
         });
         setState(() {

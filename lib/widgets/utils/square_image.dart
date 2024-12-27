@@ -1,14 +1,16 @@
+import 'package:bitrate_realm/config/assets_paths.dart';
 import 'package:flutter/material.dart';
 
 class SquareImage extends StatelessWidget {
   const SquareImage({
     Key? key,
     required this.photoLink,
+    this.placeholderLink,
     this.radius = 5,
     this.padding = EdgeInsets.zero,
   }) : super(key: key);
 
-  final String? photoLink;
+  final String? photoLink, placeholderLink;
   final double radius;
   final EdgeInsetsGeometry padding;
 
@@ -20,8 +22,9 @@ class SquareImage extends StatelessWidget {
         aspectRatio: 1,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(radius),
-          child: Image.network(
-            photoLink ?? "https://cdn-icons-png.flaticon.com/128/10446/10446694.png",
+          child: photoLink!=null
+              ? Image.network(
+            photoLink!,
             fit: BoxFit.cover, // Ensures the image covers the area without exceeding
             loadingBuilder: (context, child, loadingProgress) {
               // Show a loading widget while the image is loading
@@ -38,9 +41,10 @@ class SquareImage extends StatelessWidget {
             },
             errorBuilder: (context, error, stackTrace) {
               // Show an error widget if the image fails to load
-              return Image.asset("assets/images/placeholder.jpg");
+              return Image.asset(AssetsPaths.avatarPlaceholder, fit: BoxFit.cover);
             },
-          ),
+          )
+              : Image.asset(placeholderLink ?? AssetsPaths.avatarPlaceholder, fit: BoxFit.cover,)
         ),
       ),
     );

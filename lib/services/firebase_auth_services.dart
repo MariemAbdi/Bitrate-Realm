@@ -19,12 +19,12 @@ class FirebaseAuthServices{
   Stream<User?> get authState => _firebaseAuth.authStateChanges();
 
   //EMAIL & PASSWORD SIGNUP
-  Future<User?> signUpWithEmailAndPassword({required UserModel userModel}) async{
+  Future<User?> signUpWithEmailAndPassword({required UserModel userModel, required String password}) async{
     try{
       //SHOW LOADING CIRCLE
       showLoadingPopUp();
 
-      final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: userModel.email, password: userModel.password);
+      final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: userModel.email, password: password);
 
       //ADD USER TO DATABASE
       UserServices().createUser(userModel);
@@ -195,11 +195,11 @@ class FirebaseAuthServices{
   Future<void> resetPassword(String email) async{
     try{
       await _firebaseAuth.sendPasswordResetEmail(email: email).whenComplete(()
-      => mySnackBar(LocaleKeys.emailSentSuccessfully.tr(), Colors.green)
+      => showToast(toastType: ToastType.success, message: LocaleKeys.emailSentSuccessfully.tr())
       );
     }on FirebaseAuthException catch(e){
       debugPrint(e.message);
-      mySnackBar( LocaleKeys.checkYourEmail.tr(), Colors.red);
+      showToast(toastType: ToastType.error, message: LocaleKeys.checkYourEmail.tr());
     }
   }
 

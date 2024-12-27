@@ -1,75 +1,82 @@
 import 'dart:typed_data';
 
 class LiveStream {
-  String id, title, description, user, channelId, language, videoLink, category, thumbnailLink;
+  //channelId is the id
+  String? channelId, thumbnailLink, streamer, videoLink;
+  String title, description, category;
   int views, duration;
+  bool isLive;
   DateTime creationDate;
   Uint8List? thumbnail, video;
   List<String> tags, likes;
 
   LiveStream(
-      { this.id = "",
+      {
         required this.title,
         required this.description,
-        required this.language,
-        required this.tags,
-        this.user = "",
+        required this.category,
+        this.streamer,
         this.views = 0,
         DateTime? creationDate,
-        this.channelId = '',
+        this.channelId,
         this.duration = 0,
         this.thumbnail,
-        this.thumbnailLink = "",
+        this.thumbnailLink,
         this.video,
-        this.videoLink = '',
-        this.likes = const [],
-        required this.category
-      })
-      : creationDate = creationDate ?? DateTime.now();
+        this.videoLink,
+        this.tags = const[],
+        this.likes = const[],
+        this.isLive = false
+      }) : creationDate = creationDate ?? DateTime.now();
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'description': description,
-        'user': user,
-        'language': language,
-        'tags': tags,
-        'views': views,
-        'date': creationDate,
-        'channelId': channelId,
-        'duration': duration,
-        'thumbnail': thumbnailLink,
-        'videoUrl': videoLink,
-        'likes': likes,
-        'category': category
-      };
+  Map<String, dynamic> toJson() {
+    final data = {
+      'channelId': channelId,
+      'title': title,
+      'description': description,
+      'streamer': streamer,
+      'tags': tags,
+      'views': views,
+      'date': creationDate,
+      'duration': duration,
+      'thumbnail': thumbnailLink,
+      'category': category,
+      'likes': likes,
+      'isLive': isLive,
+    };
+
+    // Add videoLink only if it's not null
+    if (videoLink != null) {
+      data['videoLink'] = videoLink;
+    }
+
+    return data;
+  }
+
 
   static LiveStream fromJson(Map<String, dynamic> json) {
     return LiveStream(
-      id: json['id'],
+      channelId: json['channelId'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
-      user: json['user'] ?? '',
-      language: json['language'] ?? '',
+      streamer: json['streamer'] ?? '',
       tags: json['tags']?.cast<String>() ?? [],
       views: json['views']?.toInt() ?? 0,
       creationDate: json['date']?.toDate() ?? DateTime.now(),
-      channelId: json['channelId'] ?? '',
       duration: json['duration']?.toInt() ?? 0,
-      thumbnailLink: json['thumbnail'] ?? '',
-      videoLink: json['videoUrl'] ?? '',
+      thumbnailLink: json['thumbnail'],
+      videoLink: json['videoLink'] ,
       likes: json['likes']?.cast<String>() ?? [],
       category: json['category'],
+      isLive: json['isLive'],
     );
   }
 
   LiveStream copyWith({
-    String? id,
+    String? channelId,
     String? title,
     String? description,
-    String? user,
-    String? channelId,
-    String? language,
+    String? streamer,
     String? videoLink,
     String? category,
     int? views,
@@ -78,14 +85,13 @@ class LiveStream {
     String? thumbnailLink,
     List<String>? tags,
     List<String>? likes,
+    bool? isLive,
   }) {
     return LiveStream(
-      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      user: user ?? this.user,
+      streamer: streamer ?? this.streamer,
       channelId: channelId ?? this.channelId,
-      language: language ?? this.language,
       videoLink: videoLink ?? this.videoLink,
       category: category ?? this.category,
       views: views ?? this.views,
@@ -94,6 +100,7 @@ class LiveStream {
       thumbnailLink: thumbnailLink ?? this.thumbnailLink,
       tags: tags ?? this.tags,
       likes: likes ?? this.likes,
+      isLive: isLive ?? this.isLive,
     );
   }
 }

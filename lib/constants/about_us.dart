@@ -1,8 +1,12 @@
 
 import 'package:bitrate_realm/models/about_us.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
+import '../models/app_setting.dart';
 import '../translations/locale_keys.g.dart';
+
+const kDefaultUserBio = "Hey there! I'm just here to share my journey and connect with amazing people. Follow along for fun moments, awesome streams, and a positive vibe! Feel free to chat and join the fun!";
 
 Map<String, String> availableLanguages = {
   "English": "en",
@@ -44,4 +48,27 @@ List<AboutUsModel> aboutUsList = [
     // These values are not just words; they are the foundation of our culture and the driving force behind our continued growth and success.
     lottieLink: "assets/lottie/sad-dog.json",
   ),
+];
+
+List<AppSetting> contactUsInformation=[
+  AppSetting(
+      title: LocaleKeys.phone.tr(),
+      subtitle: "+216 23 456 789",
+      iconData: Icons.phone_android
+  ),
+  AppSetting(
+      title: LocaleKeys.fax.tr(),
+      subtitle: "+216 79 456 789",
+      iconData: Icons.fax
+  ),
+  AppSetting(
+      title: LocaleKeys.email.tr(),
+      subtitle: "bitrate.realm@isetr.tn",
+      iconData: Icons.email
+  ),
+  AppSetting(
+      title: LocaleKeys.address.tr(),
+      subtitle: "ISET RADES",
+      iconData: Icons.map
+  )
 ];

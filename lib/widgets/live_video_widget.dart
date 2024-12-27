@@ -1,3 +1,4 @@
+import 'package:bitrate_realm/config/routing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ import '../models/live_stream.dart';
 import '../services/livestream_services.dart';
 import '../services/firebase_storage_services.dart';
 import '../config/utils.dart';
-import '../screens/Going Live/broadcast_screen.dart';
-import '../config/app_style.dart';
+import '../screens/live/broadcast_screen.dart';
 
 class LiveVideoWidget extends StatefulWidget {
   final LiveStream video;
@@ -35,10 +35,10 @@ class _LiveVideoWidgetState extends State<LiveVideoWidget> {
 
               Ink.image(image: NetworkImage(snapshot.data!), height: 150, fit: BoxFit.cover,),
 
-              Positioned(
-                  top: 5,
-                  left: 10,
-                  child: Text(widget.video.language, style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600)))),
+              // Positioned(
+              //     top: 5,
+              //     left: 10,
+              //     child: Text(widget.video.language, style: GoogleFonts.ptSans(textStyle: const TextStyle(fontWeight: FontWeight.w600)))),
 
               Positioned(
                   bottom: 3,
@@ -56,7 +56,7 @@ class _LiveVideoWidgetState extends State<LiveVideoWidget> {
   //GETTING THE USER'S PROFILE PICTURE
   Widget profilePicture(){
     return FutureBuilder(
-      future: storage.downloadURL("profile pictures", widget.video.user),
+      future: storage.downloadURL("profile pictures", widget.video.streamer??""),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if(snapshot.hasData){
             return Container(
@@ -78,7 +78,7 @@ class _LiveVideoWidgetState extends State<LiveVideoWidget> {
   }
 
   getUser(){
-    FirebaseFirestore.instance.collection("users").doc(widget.video.user).get().then((DocumentSnapshot documentSnapshot){
+    FirebaseFirestore.instance.collection("users").doc(widget.video.streamer).get().then((DocumentSnapshot documentSnapshot){
       setState(() {
         nickname=documentSnapshot["nickname"];
       });
@@ -102,14 +102,10 @@ class _LiveVideoWidgetState extends State<LiveVideoWidget> {
     return InkWell(
       onTap: ()async{
 
-        await LiveStreamServices().updateViewCount(widget.video.channelId, true);
+        await LiveStreamServices().updateViewCount(widget.video.channelId??"", true);
 
         if(!mounted) return;
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => BroadcastScreen(
-              isBroadcaster: false,
-              channelId: widget.video.channelId,
-              liveStream: widget.video,)));
+        broadcastNavigation(false, widget.video);
       },
       child: Card(
         elevation: 4,
@@ -121,7 +117,7 @@ class _LiveVideoWidgetState extends State<LiveVideoWidget> {
         child: Column(
           children: [
 
-            thumbnail(widget.video.thumbnailLink),
+            thumbnail(widget.video.thumbnailLink??""),
 
             Padding(
               padding: const EdgeInsets.only(top: 5, right: 15, left: 15, bottom: 5),
